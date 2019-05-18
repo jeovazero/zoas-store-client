@@ -1,11 +1,11 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles'
 
 const palette = {
   primary: { main: '#202020' },
   secondary: { main: '#00E5FF' }
-};
+}
 
-const themeName = 'Mine Shaft Cyan / Aqua Chuckwalla';
+const themeName = 'Mine Shaft Cyan / Aqua Chuckwalla'
 
 const typography = {
   fontFamily: 'Koho, Roboto, sans-serif',
@@ -14,4 +14,4 @@ const typography = {
   }
 }
 
-export default createMuiTheme({ palette, themeName, typography });
+export default createMuiTheme({ palette, themeName, typography })

@@ -26,6 +26,6 @@ module.exports = {
   plugins: [
     new HtmlPlugin({
       template: './src/index.html'
-    }),
+    })
   ]
 }
