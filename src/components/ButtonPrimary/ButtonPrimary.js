@@ -9,7 +9,7 @@ type Props = {
 
 const ButtonPrimary = ({ children }: Props) => (
   <Button variant='contained' color='primary'>
-    children
+    {children}
   </Button>
 )
 
