@@ -1,0 +1,16 @@
+table {
+  margin: 1rem 0;
+  border-spacing: 0;
+}
+
+tr th {
+  border: 2px solid royalblue;
+  margin: 0;
+  padding: 0.5rem;
+}
+
+tr td {
+  border: 2px solid #888;
+  border-top: none;
+  padding: 0.5rem;
+}
