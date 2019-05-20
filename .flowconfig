@@ -1,4 +1,9 @@
 [ignore]
+<PROJECT_ROOT>/node_modules/@babel/.*
+<PROJECT_ROOT>/node_modules/@emotion/.*
+<PROJECT_ROOT>/node_modules/[a-i].*/.*
+<PROJECT_ROOT>/node_modules/storybook.*/.*
+<PROJECT_ROOT>/node_modules/webpack.*/.*
 
 [include]
 
