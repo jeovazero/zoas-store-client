@@ -12,7 +12,8 @@ storiesOf('Components', module)
       propTablesExclude: [CartBadge],
       components: {
         CartBadge: CartBadge
-      }
+      },
+      excludedPropTypes: ['classes']
     }
   })
   .add('CartBadge', () => {

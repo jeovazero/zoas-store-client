@@ -6,7 +6,7 @@ import CartBadge from './CartBadge'
 afterEach(cleanup)
 
 describe('Should render a CartBadge', () => {
-  it('Should render the CartBadge with label', () => {
+  it('with label', () => {
     const { queryByText } = render(
       <CartBadge color='primary' size='small' quantity='10' label='R$ 250,00' />
     )
