@@ -60,5 +60,10 @@
     "@material-ui/icons": "^3.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|eot|svg|ttf|woff|woff2)$": "<rootDir>/__mocks__/fileTransformer.js"
+    }
   }
 }
