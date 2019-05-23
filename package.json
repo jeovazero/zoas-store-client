@@ -10,7 +10,7 @@
     "start": "webpack-dev-server --config webpack.config.js --mode development",
     "build": "webpack --config webpack.config.js --mode production",
     "prettier": "prettier-standard '**/*.{jsx,js}' && yarn lint:fix",
-    "lint:fix": "standard --fix '**/*.{jsx,js}' --parser babel-eslint --plugin flowtype",
+    "lint:fix": "standard --env jest --fix '**/*.{jsx,js}' --parser babel-eslint --plugin flowtype",
     "storybook": "start-storybook -p 9002 -c .storybook",
     "build-storybook": "build-storybook -c .storybook",
     "test": "jest",
