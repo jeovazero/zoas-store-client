@@ -1,5 +1,6 @@
 const HtmlPlugin = require('html-webpack-plugin')
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/index.js',
@@ -20,12 +21,21 @@ module.exports = {
         use: {
           loader: 'babel-loader'
         }
+      },
+      {
+        test: /(\.svg|\.png|\.jpg)$/,
+        use: {
+          loader: 'file-loader'
+        }
       }
     ]
   },
   plugins: [
     new HtmlPlugin({
       template: './src/index.html'
+    }),
+    new webpack.DefinePlugin({
+      API_URL: process.env.API_URL || 'localhost:3000/graphql'
     })
   ]
 }
