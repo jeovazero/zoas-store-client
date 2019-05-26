@@ -1,6 +1,8 @@
 import React from 'react'
 import { render, cleanup, fireEvent } from 'react-testing-library'
 import Carousel from './Carousel'
+import theme from '../../theme.js'
+import { ThemeProvider } from '@material-ui/styles'
 
 // unmount and cleanup DOM
 afterEach(cleanup)
@@ -9,7 +11,11 @@ const imagesList = ['image1', 'image2', 'image3']
 
 describe('Should render a Carousel', () => {
   it('showing the first image', () => {
-    const { container } = render(<Carousel images={imagesList} />)
+    const { container } = render(
+      <ThemeProvider theme={theme}>
+        <Carousel images={imagesList} />
+      </ThemeProvider>
+    )
 
     const card = container.querySelector('div:nth-of-type(2) div')
     const style = card.getAttribute('style')
@@ -19,7 +25,11 @@ describe('Should render a Carousel', () => {
 
   it('and clicking in the arrow controls', () => {
     jest.useFakeTimers()
-    const { getByTestId, container } = render(<Carousel images={imagesList} />)
+    const { getByTestId, container } = render(
+      <ThemeProvider theme={theme}>
+        <Carousel images={imagesList} />
+      </ThemeProvider>
+    )
 
     const getCard = () => container.querySelector('div:nth-of-type(2) div')
     const arrowLeft = getByTestId('arrow-left')
