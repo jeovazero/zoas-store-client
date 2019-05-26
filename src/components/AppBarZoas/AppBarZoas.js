@@ -31,7 +31,7 @@ const AppBarZoas = (props: Props) => {
   const { classes, totalPrice, totalProducts } = props
 
   return (
-    <AppBar>
+    <AppBar position='static'>
       <Toolbar>
         <div className={classes.imgContainer}>
           <img src={ZoasLogo} />
