@@ -3,17 +3,11 @@ import React from 'react'
 import IconButton from '@material-ui/core/IconButton'
 import Badge from '@material-ui/core/Badge'
 import ShoppingCartOutline from '@material-ui/icons/ShoppingCartOutlined'
-import { withStyles } from '@material-ui/core/styles'
+import { makeStyles, createStyles } from '@material-ui/styles'
 
 type Color = 'inherit' | 'primary' | 'secondary' | 'disabled'
 
 type Size = 'inherit' | 'default' | 'small' | 'large'
-
-type Classes = {
-  root: mixed,
-  span: mixed,
-  badge: mixed
-}
 
 type Props = {
   onClick?: () => mixed,
@@ -24,39 +18,44 @@ type Props = {
   quantity?: string,
   /** A label about price */
   label?: string,
-  classes: Classes
+  /* A className */
+  className?: string
 }
 
-const styles = theme => ({
-  root: {
-    display: 'inline-flex',
-    flexDirection: 'column',
-    fontFamily: 'Roboto'
-  },
-  span: {
-    display: 'inline-block',
-    fontFamily: theme.typography.fontFamilySecondary,
-    fontSize: 10,
-    fontWeight: 'bold',
-    color: 'inherit',
-    marginTop: theme.spacing.unit * -1,
-    textAlign: 'center'
-  },
-  badge: {
-    fontFamily: theme.typography.fontFamilySecondary,
-    fontWeight: 'bolder'
-  }
-})
+const useStyles = makeStyles(theme =>
+  createStyles({
+    root: {
+      display: 'inline-flex',
+      flexDirection: 'column',
+      fontFamily: 'Roboto'
+    },
+    span: {
+      display: 'inline-block',
+      fontFamily: theme.typography.fontFamilySecondary,
+      fontSize: 10,
+      fontWeight: 'bold',
+      color: 'inherit',
+      marginTop: theme.spacing(-1),
+      textAlign: 'center'
+    },
+    badge: {
+      fontFamily: theme.typography.fontFamilySecondary,
+      fontWeight: 'bolder'
+    }
+  })
+)
 
 const CartBadge = (props: Props) => {
-  const { classes, color, onClick, quantity, size, label } = props
+  const { className, color, onClick, quantity = '', size, label } = props
+  const classes = useStyles()
+  const quantitySan = quantity.length === 0 ? null : quantity
 
   return (
-    <div className={classes.root}>
+    <div className={[className, classes.root].join(' ')}>
       <IconButton color={color} onClick={onClick} variant='contained'>
         <Badge
           classes={{ badge: classes.badge }}
-          badgeContent={quantity}
+          badgeContent={quantitySan}
           color='secondary'
         >
           <ShoppingCartOutline fontSize={size} color='inherit' />
@@ -77,6 +76,4 @@ CartBadge.defaultProps = {
   quantity: ''
 }
 
-export const CartBadgeComponent = CartBadge
-
-export default withStyles(styles)(CartBadge)
+export default CartBadge

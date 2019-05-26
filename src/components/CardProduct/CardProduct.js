@@ -4,15 +4,7 @@ import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
-import { withStyles } from '@material-ui/core/styles'
-
-type Classes = {
-  card: mixed,
-  details: mixed,
-  subdetails: mixed,
-  isDanger: mixed,
-  cover: mixed
-}
+import { makeStyles, createStyles } from '@material-ui/styles'
 
 type Props = {
   onClickDetails?: () => mixed,
@@ -26,51 +18,56 @@ type Props = {
   image: string,
   /** To display whether the product has stock */
   isInStock: boolean,
-  classes: Classes
+  /* A className */
+  className?: string
 }
 
-const styles = theme => ({
-  card: {
-    display: 'flex',
-    padding: theme.spacing.unit * 2,
-    maxWidth: 480
-  },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit
-  },
-  subdetails: {
-    display: 'flex',
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-    justifyContent: 'space-between',
-    flexGrow: 1
-  },
-  cover: {
-    minWidth: '120px',
-    minHeight: '120px'
-  },
-  isDanger: {
-    color: theme.palette.error.main
-  }
-})
+const useStyles = makeStyles(theme =>
+  createStyles({
+    card: {
+      display: 'flex',
+      padding: theme.spacing(2),
+      maxWidth: 480
+    },
+    details: {
+      display: 'flex',
+      flexDirection: 'column',
+      flexGrow: 1,
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(1)
+    },
+    subdetails: {
+      display: 'flex',
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
+      justifyContent: 'space-between',
+      flexGrow: 1
+    },
+    cover: {
+      minWidth: '120px',
+      minHeight: '120px'
+    },
+    isDanger: {
+      color: theme.palette.error.main
+    }
+  })
+)
 
 const CardProduct = (props: Props) => {
   const {
-    classes,
     onClickDetails,
     image,
     title,
     subtitle,
     isInStock,
-    price
+    price,
+    className
   } = props
 
+  const classes = useStyles()
+
   return (
-    <Card className={classes.card}>
+    <Card className={[classes.card, className].join(' ')}>
       <CardMedia className={classes.cover} image={image} title={title} />
       <div className={classes.details}>
         <Typography variant='h5'>{title}</Typography>
@@ -93,6 +90,4 @@ const CardProduct = (props: Props) => {
 
 CardProduct.defaultProps = {}
 
-export const CardProductComponent = CardProduct
-
-export default withStyles(styles)(CardProduct)
+export default CardProduct
