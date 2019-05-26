@@ -34,8 +34,8 @@ module.exports = {
     new HtmlPlugin({
       template: './src/index.html'
     }),
-    new webpack.DefinePlugin({
-      API_URL: process.env.API_URL || 'localhost:3000/graphql'
+    new webpack.EnvironmentPlugin({
+      API_URL: process.env.API_URL || 'http://localhost:3000'
     })
   ]
 }
