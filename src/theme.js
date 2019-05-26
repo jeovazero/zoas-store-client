@@ -9,6 +9,7 @@ const themeName = 'Mine Shaft Cyan / Aqua Chuckwalla'
 
 const typography = {
   fontFamily: 'Koho, Roboto, sans-serif',
+  fontFamilySecondary: 'Lato, Roboto, sans-serif',
   button: {
     fontWeight: 'bold'
   }
