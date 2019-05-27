@@ -21,6 +21,22 @@ const useStyles = makeStyles(theme => {
     },
     wrapper: {
       width: '100%'
+    },
+    priceContainer: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: '1rem'
+    },
+    title: {
+      marginTop: '1rem'
+    },
+    description: {
+      marginTop: '1rem',
+      marginBottom: '1rem'
+    },
+    buttonWrapper: {
+      textAlign: 'center'
     }
   })
 })
@@ -33,18 +49,23 @@ const Product = (props: Props) => {
     <section className={classes.section}>
       <div className={classes.wrapper}>
         <Carousel images={data.photos.map(x => x.url)} />
-        <Typography variant='h3'> {data.title} </Typography>
-        <Typography variant='h5'>{data.description}</Typography>
-        <div>
+        <Typography variant='h3' className={classes.title}>
+          {data.title}
+        </Typography>
+        <Typography variant='h5' className={classes.description}>
+          {data.description}
+        </Typography>
+        <div className={classes.priceContainer}>
           <Typography variant='h4'> {`R$ ${data.price}`} </Typography>
           <Typography>
-            {' '}
-            {data.avaliability ? 'Em estoque' : 'Sem estoque'}{' '}
+            {data.avaliability ? 'Em estoque' : 'Sem estoque'}
           </Typography>
         </div>
-        <Button variant='contained' color='primary'>
-          Comprar
-        </Button>
+        <div className={classes.buttonWrapper}>
+          <Button variant='contained' color='primary' size='large'>
+            Comprar
+          </Button>
+        </div>
       </div>
     </section>
   )
