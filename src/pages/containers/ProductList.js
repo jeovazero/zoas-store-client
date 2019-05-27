@@ -1,16 +1,19 @@
 // @flow
 import React from 'react'
-import { graphql, createFragmentContainer } from 'react-relay'
-import { CardProduct } from '../components'
-import { makeStyles, createStyles } from '@material-ui/styles'
 import ProductListDataType from './__generated__/ProductList_data.graphql'
+import { withRouter } from 'react-router-dom'
+import { CardProduct } from '../../components'
+import { graphql, createFragmentContainer } from 'react-relay'
+import { makeStyles, createStyles } from '@material-ui/styles'
 
 type Props = {
-  data: ProductListDataType
+  data: ProductListDataType,
+  history: {
+    push: mixed => mixed
+  }
 }
 
 const useStyles = makeStyles(theme => {
-  console.log({ theme })
   return createStyles({
     section: {
       padding: '2rem',
@@ -29,7 +32,7 @@ const useStyles = makeStyles(theme => {
 })
 
 const ProductList = (props: Props) => {
-  const { data } = props
+  const { data, history } = props
   const classes = useStyles()
 
   return (
@@ -44,6 +47,12 @@ const ProductList = (props: Props) => {
             price={`R$ ${node.price}`}
             image={node.photos[0].url}
             isInStock={node.avaliability}
+            onClickDetails={() => {
+              history.push({
+                pathname: '/product',
+                search: `?id=${node.id}`
+              })
+            }}
           />
         ))}
       </ul>
@@ -51,7 +60,7 @@ const ProductList = (props: Props) => {
   )
 }
 
-export default createFragmentContainer(ProductList, {
+export default createFragmentContainer(withRouter(ProductList), {
   data: graphql`
     fragment ProductList_data on ProductConnection {
       edges {
