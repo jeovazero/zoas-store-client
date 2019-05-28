@@ -23,7 +23,7 @@ const CartView = () => {
   return (
     <div>
       <CartRootRender>
-        {() => (
+        {({ refetchCart }) => (
           <div className={classes.root}>
             <QueryRenderer
               environment={relay}
@@ -46,7 +46,9 @@ const CartView = () => {
                     </div>
                   )
                 }
-                return <ProductCartList data={props.cart} />
+                return (
+                  <ProductCartList data={props.cart} onChange={refetchCart} />
+                )
               }}
             />
           </div>
