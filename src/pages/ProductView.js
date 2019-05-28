@@ -2,8 +2,8 @@ import React from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import qs from 'querystring'
 import relay from '../createRelay'
+import AppBarRender from './AppBarRender'
 import { Product } from './containers'
-import { AppBarZoas } from '../components'
 import { makeStyles } from '@material-ui/styles'
 import { Redirect } from 'react-router-dom'
 import { graphql, QueryRenderer } from 'react-relay'
@@ -36,7 +36,7 @@ const ProductView = (props: Props) => {
 
   return (
     <div>
-      <AppBarZoas />
+      <AppBarRender />
       <div className={classes.root}>
         <QueryRenderer
           environment={relay}
