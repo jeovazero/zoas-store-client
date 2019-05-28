@@ -10,6 +10,7 @@ function fetchQuery (operation, variables) {
     headers: {
       'Content-Type': 'application/json'
     },
+    credentials: 'include',
     body: JSON.stringify({
       query: operation.text,
       variables
