@@ -2,7 +2,7 @@
 import React from 'react'
 import ProductCartListDataType from './__generated__/ProductCartList_data.graphql'
 import { ProductCart } from '../../components'
-import { putProductMutation } from '../mutations'
+import { putProductMutation, removeProductMutation } from '../mutations'
 import { graphql, createRefetchContainer } from 'react-relay'
 import { makeStyles, createStyles } from '@material-ui/styles'
 
@@ -51,6 +51,12 @@ const ProductCartList = (props: Props) => {
             maxQuantity={node.quantity + 5}
             onChangeQuantity={quantity => {
               putProductMutation({ productId: node.id, quantity }, () => {
+                relay.refetch()
+                onChange()
+              })
+            }}
+            onRemove={() => {
+              removeProductMutation({ productId: node.id }, () => {
                 relay.refetch()
                 onChange()
               })
