@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const AppBarZoas = (props: Props) => {
-  const { totalPrice, totalProducts, className } = props
+  const { totalPrice, totalProducts, className, onClick } = props
   const classes = useStyles()
 
   return (
@@ -34,7 +34,11 @@ const AppBarZoas = (props: Props) => {
         <div className={classes.imgContainer}>
           <img src={ZoasLogo} />
         </div>
-        <CartBadge quantity={totalProducts} label={totalPrice} />
+        <CartBadge
+          quantity={totalProducts}
+          label={totalPrice}
+          onClick={onClick}
+        />
       </Toolbar>
     </AppBar>
   )
