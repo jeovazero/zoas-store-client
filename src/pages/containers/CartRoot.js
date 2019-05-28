@@ -10,7 +10,7 @@ type Props = {
   relay: {
     refetch: () => mixed
   },
-  children: Node
+  children: mixed => Node
 }
 
 const CartRoot = (props: Props) => {

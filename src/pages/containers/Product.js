@@ -7,7 +7,8 @@ import { makeStyles, createStyles } from '@material-ui/styles'
 import { Carousel } from '../../components'
 
 type Props = {
-  data: ProductDataType
+  data: ProductDataType,
+  onBuy: mixed => mixed
 }
 
 const useStyles = makeStyles(theme => {
@@ -42,7 +43,7 @@ const useStyles = makeStyles(theme => {
 })
 
 const Product = (props: Props) => {
-  const { data } = props
+  const { data, onBuy } = props
   const classes = useStyles()
 
   return (
@@ -62,7 +63,12 @@ const Product = (props: Props) => {
           </Typography>
         </div>
         <div className={classes.buttonWrapper}>
-          <Button variant='contained' color='primary' size='large'>
+          <Button
+            variant='contained'
+            color='primary'
+            size='large'
+            onClick={() => onBuy({ productId: data.id, quantity: 1 })}
+          >
             Comprar
           </Button>
         </div>
