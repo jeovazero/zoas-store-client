@@ -10,7 +10,7 @@
     "start": "webpack-dev-server --config webpack.config.js --mode development",
     "build": "webpack --config webpack.config.js --mode production",
     "prettier": "prettier-standard '**/*.{jsx,js}' && yarn lint:fix",
-    "lint:fix": "standard --env jest --fix '**/*.{jsx,js}' --parser babel-eslint --plugin flowtype",
+    "lint:fix": "standard '**/*.{jsx,js}'",
     "storybook": "start-storybook -p 9002 -c .storybook",
     "build-storybook": "build-storybook -c .storybook",
     "relay": "relay-compiler --src ./src --schema ./schema.graphql --extensions js jsx",
@@ -20,7 +20,7 @@
   "lint-staged": {
     "*.{jsx,js}": [
       "prettier-standard",
-      "standard --env jest --fix --parser babel-eslint --plugin flowtype",
+      "standard",
       "git add"
     ]
   },
@@ -68,6 +68,15 @@
     "react-relay": "^4.0.0",
     "react-router-dom": "^5.0.0",
     "uuid": "^3.3.2"
+  },
+  "standard": {
+    "env": "jest",
+    "fix": true,
+    "plugin": "flowtype",
+    "parser": "babel-eslint",
+    "globals": [
+       "$Shape"
+    ]
   },
   "jest": {
     "moduleNameMapper": {
