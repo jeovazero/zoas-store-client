@@ -6,6 +6,7 @@ import CartRootRender from './CartRootRender'
 import { CircularProgress, Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { graphql, QueryRenderer } from 'react-relay'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles({
   root: {
@@ -70,9 +71,11 @@ const CartView = () => {
                 <Typography variant='h3'>Total</Typography>
                 <Typography variant='h3'>{`R$ ${total(cart)}`}</Typography>
               </div>
-              <Button size='large' variant='contained' color='primary'>
-                Checkout
-              </Button>
+              <Link to='/checkout'>
+                <Button size='large' variant='contained' color='primary'>
+                  Checkout
+                </Button>
+              </Link>
             </div>
           </div>
         )}

@@ -1,7 +1,7 @@
 import React from 'react'
 import theme from './theme'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { Home, ProductView, CartView } from './pages'
+import { Home, ProductView, CartView, CheckoutView } from './pages'
 import { HashRouter as Router, Route } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/styles'
 
@@ -10,8 +10,9 @@ const App = () => (
     <CssBaseline />
     <Router>
       <Route exact path='/' component={Home} />
-      <Route exact path='/product' component={ProductView} />
-      <Route exact path='/mycart' component={CartView} />
+      <Route path='/product' component={ProductView} />
+      <Route path='/mycart' component={CartView} />
+      <Route path='/checkout' component={CheckoutView} />
     </Router>
   </ThemeProvider>
 )
