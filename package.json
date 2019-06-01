@@ -47,6 +47,7 @@
     "html-webpack-plugin": "^3.2.0",
     "husky": "^2.3.0",
     "jest": "^24.8.0",
+    "jest-dom": "^3.4.0",
     "lint-staged": "^8.1.7",
     "prettier": "^1.17.1",
     "prettier-standard": "^9.1.1",
@@ -75,7 +76,7 @@
     "plugin": "flowtype",
     "parser": "babel-eslint",
     "globals": [
-       "$Shape"
+      "$Shape"
     ]
   },
   "jest": {
