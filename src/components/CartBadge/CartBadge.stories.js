@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { text, select } from '@storybook/addon-knobs'
+import { number, text, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import CartBadge from './CartBadge'
 
@@ -16,7 +16,7 @@ storiesOf('Components', module).add('CartBadge', () => {
     ['inherit', 'default', 'small', 'large'],
     'default'
   )
-  const quantity = text('Quantity', '10')
+  const quantity = number('Quantity', 10)
   const label = text('Label', 'R$ 250,00')
   return (
     <CartBadge
