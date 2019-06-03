@@ -11,7 +11,6 @@ storiesOf('Components', module).add('CardProduct', () => {
     'https://res.cloudinary.com/sohdezoas/image/upload/v1556567196/zoas/Group_3_z9s6ep.jpg'
   )
   const title = text('title', 'Shirt model 2')
-  const subtitle = text('subtitle', 'A shirt of zoas mark')
   const price = text('price', 'R$ 2.00')
   const isInStock = boolean('isInStock', false)
 
@@ -19,10 +18,9 @@ storiesOf('Components', module).add('CardProduct', () => {
     <CardProduct
       title={title}
       image={image}
-      subtitle={subtitle}
       price={price}
       isInStock={isInStock}
-      onClickDetails={action('[CardProduct] :: Details Clicked')}
+      onClick={action('[CardProduct] :: Clicked')}
     />
   )
 })

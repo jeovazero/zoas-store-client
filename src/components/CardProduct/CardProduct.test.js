@@ -3,40 +3,33 @@ import { render, cleanup } from 'react-testing-library'
 import CardProduct from './CardProduct'
 import theme from '../../theme.js'
 import { ThemeProvider } from '@material-ui/styles'
+import 'jest-dom/extend-expect'
 
 // unmount and cleanup DOM
 afterEach(cleanup)
 
 describe('Should render a CardProduct', () => {
-  it('with in stock message', () => {
-    const { queryByText } = render(
+  it('with lack of stock message', () => {
+    const { getAllByTitle, queryByText } = render(
       <ThemeProvider theme={theme}>
         <CardProduct
-          title='title'
-          image='image'
-          subtitle='subtitle'
-          price='price'
-          isInStock
-        />
-      </ThemeProvider>
-    )
-
-    expect(queryByText(/Em estoque/i)).toBeTruthy()
-  })
-
-  it('without in stock message', () => {
-    const { queryByText } = render(
-      <ThemeProvider theme={theme}>
-        <CardProduct
-          title='title'
-          image='image'
-          subtitle='subtitle'
-          price='price'
+          title='product test'
+          image='https://image.com'
+          price='R$ 20.00'
           isInStock={false}
         />
       </ThemeProvider>
     )
 
-    expect(queryByText(/Sem estoque/i)).toBeTruthy()
+    const [wrapper, image] = getAllByTitle(/product test/i)
+    const title = queryByText(/product test/i)
+    const price = queryByText(/R\$ 20.00/i)
+    expect(wrapper).toBeVisible()
+    expect(title).toBeVisible()
+    expect(price).toBeVisible()
+    expect(image).toBeVisible()
+    expect(wrapper).toContainElement(title)
+    expect(wrapper).toContainElement(price)
+    expect(wrapper).toContainElement(image)
   })
 })
