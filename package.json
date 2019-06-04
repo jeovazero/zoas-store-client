@@ -10,7 +10,7 @@
     "start": "webpack-dev-server --config webpack.config.js --mode development",
     "build": "webpack --config webpack.config.js --mode production",
     "prettier": "prettier-standard '**/*.{jsx,js}' && yarn lint:fix",
-    "lint:fix": "standard '**/*.{jsx,js}'",
+    "lint:fix": "standard '**/*.{jsx,js}' --fix",
     "storybook": "start-storybook -p 9002 -c .storybook",
     "build-storybook": "build-storybook -c .storybook",
     "relay": "relay-compiler --src ./src --schema ./schema.graphql --extensions js jsx",
@@ -20,7 +20,7 @@
   "lint-staged": {
     "*.{jsx,js}": [
       "prettier-standard",
-      "standard",
+      "standard --fix",
       "git add"
     ]
   },
