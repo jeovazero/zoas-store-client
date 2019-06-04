@@ -16,8 +16,8 @@ type Props = {
   size: Size,
   /** Quantity of items in the cart */
   quantity?: number,
-  /** A label about price */
-  label?: string,
+  /** The price of items in the cart */
+  price?: number,
   /* A className */
   className?: string
 }
@@ -45,10 +45,12 @@ const useStyles = makeStyles(theme =>
   })
 )
 
-const CartBadge = (props: Props) => {
-  const { className, color, onClick, quantity, size, label } = props
-  const classes = useStyles()
+const formatMoney = (n: number) => n.toFixed(2).replace('.', ',')
 
+const CartBadge = (props: Props) => {
+  const { className, color, onClick, quantity, size, price } = props
+  const classes = useStyles()
+  const label = price ? `R$ ${formatMoney(price)}` : null
   return (
     <div className={[className, classes.root].join(' ')} aria-label='carrinho'>
       <IconButton color={color} onClick={onClick} variant='contained'>

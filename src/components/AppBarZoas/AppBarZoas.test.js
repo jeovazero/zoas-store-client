@@ -12,7 +12,7 @@ describe('Should render a CartBadge', () => {
   it('with cart detailed', () => {
     const { queryByLabelText, queryByText } = render(
       <ThemeProvider theme={theme}>
-        <AppBarZoas totalPrice='R$ 10,00' totalProducts='85' />
+        <AppBarZoas totalPrice={10.53} totalProducts='85' />
       </ThemeProvider>
     )
 
@@ -28,7 +28,7 @@ describe('Should render a CartBadge', () => {
     expect(container).toContainElement(cart)
 
     // price of cart
-    expect(queryByText(/R\$ 10,00/i)).toBeVisible()
+    expect(queryByText(/R\$ 10,53/i)).toBeVisible()
 
     // label of cart
     expect(queryByText(/85/i)).toBeTruthy()

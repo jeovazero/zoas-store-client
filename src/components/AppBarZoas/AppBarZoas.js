@@ -55,7 +55,7 @@ const AppBarZoas = (props: Props) => {
         </div>
         <CartBadge
           quantity={totalProducts}
-          label={totalPrice}
+          price={totalPrice}
           onClick={onClickCart}
         />
       </Toolbar>

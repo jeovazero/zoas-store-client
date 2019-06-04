@@ -12,12 +12,7 @@ describe('Should render a CartBadge', () => {
   it('with label', () => {
     const { queryByLabelText } = render(
       <ThemeProvider theme={theme}>
-        <CartBadge
-          color='primary'
-          size='small'
-          quantity={10}
-          label='R$ 250,00'
-        />
+        <CartBadge color='primary' size='small' quantity={10} price={250} />
       </ThemeProvider>
     )
 
@@ -29,6 +24,8 @@ describe('Should render a CartBadge', () => {
     expect(badge).toBeVisible()
     expect(priceLabel).toBeVisible()
     expect(container).toBeVisible()
+
+    expect(/R\$ 250,00/i.test(priceLabel.innerHTML)).toBeTruthy()
 
     // Expecting the hierarchy
     expect(container).toContainElement(badge)
