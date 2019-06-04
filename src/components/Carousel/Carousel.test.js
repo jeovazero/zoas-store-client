@@ -3,6 +3,7 @@ import { render, cleanup, fireEvent } from 'react-testing-library'
 import Carousel from './Carousel'
 import theme from '../../theme.js'
 import { ThemeProvider } from '@material-ui/styles'
+import 'jest-dom/extend-expect'
 
 // unmount and cleanup DOM
 afterEach(cleanup)
@@ -10,45 +11,39 @@ afterEach(cleanup)
 const imagesList = ['image1', 'image2', 'image3']
 
 describe('Should render a Carousel', () => {
-  it('showing the first image', () => {
-    const { container } = render(
+  it('and click in the arrow controls', () => {
+    const { getByLabelText, getAllByLabelText } = render(
       <ThemeProvider theme={theme}>
         <Carousel images={imagesList} />
       </ThemeProvider>
     )
 
-    const card = container.querySelector('div:nth-of-type(2) div')
-    const style = card.getAttribute('style')
+    const arrowLeft = getByLabelText(/imagem anterior/i)
+    const arrowRight = getByLabelText(/próxima imagem/i)
+    const images = getAllByLabelText(/imagem do produto/i)
+    const containerImages = images[0].parentElement
+    const getRightValue = el => window.getComputedStyle(el)._values.right
+    const getWidthValue = el => window.getComputedStyle(el)._values.width
 
-    expect(new RegExp(imagesList[0], 'gi').test(style)).toBeTruthy()
-  })
+    expect(images[0]).toBeVisible()
+    expect(images[1]).toBeVisible()
+    expect(images[2]).toBeVisible()
+    expect(arrowLeft).toBeVisible()
+    expect(arrowRight).toBeVisible()
 
-  it('and clicking in the arrow controls', () => {
-    jest.useFakeTimers()
-    const { getByTestId, container } = render(
-      <ThemeProvider theme={theme}>
-        <Carousel images={imagesList} />
-      </ThemeProvider>
-    )
+    // The width of image wrapper
+    const widthBase = parseInt(getWidthValue(images[0]))
 
-    const getCard = () => container.querySelector('div:nth-of-type(2) div')
-    const arrowLeft = getByTestId('arrow-left')
-    const arrowRight = getByTestId('arrow-right')
+    // The idea of carousel is the right shift changing the displayed image
+    expect(getRightValue(containerImages)).toBe('0px')
 
-    // Expecting the first image
-    const style1 = getCard().getAttribute('style')
-    expect(new RegExp(imagesList[0], 'gi').test(style1)).toBeTruthy()
-
-    // click in the arrow right (expect the second image)
     fireEvent.click(arrowRight)
-    jest.advanceTimersByTime(1000)
-    const style2 = getCard().getAttribute('style')
-    expect(new RegExp(imagesList[1], 'gi').test(style2)).toBeTruthy()
+    expect(getRightValue(containerImages)).toBe(`${widthBase}px`)
 
-    // click in the arrow left (expect the first image)
+    fireEvent.click(arrowRight)
+    expect(getRightValue(containerImages)).toBe(`${widthBase * 2}px`)
+
     fireEvent.click(arrowLeft)
-    jest.advanceTimersByTime(2000)
-    const style3 = getCard().getAttribute('style')
-    expect(new RegExp(imagesList[0], 'gi').test(style3)).toBeTruthy()
+    expect(getRightValue(containerImages)).toBe(`${widthBase}px`)
   })
 })
