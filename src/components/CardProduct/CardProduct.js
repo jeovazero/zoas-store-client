@@ -10,7 +10,7 @@ type Props = {
   /** A title for the product card */
   title: string,
   /** A price for the product card */
-  price: string,
+  price: number,
   /** A image for the product card */
   image: string,
   /** To display whether the product has stock */
@@ -62,8 +62,8 @@ const CardStyled = styled(Card)({
 })
 
 const CardMediaStyled = styled(CardMedia)({
-  width: 120,
-  height: 120,
+  width: 110,
+  height: 110,
   backgroundSize: 'contain'
 })
 
@@ -145,7 +145,7 @@ const CardProduct = (props: Props) => {
           <CardMediaStyled image={image} title={title} />
           <Details>
             <Title>{title}</Title>
-            <Price>{price}</Price>
+            <Price>{`R$ ${price.toFixed(2)}`}</Price>
             <Container
               justifycontent={isInStock ? 'flex-end' : 'space-between'}
             >

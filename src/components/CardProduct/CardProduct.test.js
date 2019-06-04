@@ -15,7 +15,7 @@ describe('Should render a CardProduct', () => {
         <CardProduct
           title='product test'
           image='https://image.com'
-          price='R$ 20.00'
+          price={20.12}
           isInStock={false}
         />
       </ThemeProvider>
@@ -23,7 +23,7 @@ describe('Should render a CardProduct', () => {
 
     const [wrapper, image] = getAllByTitle(/product test/i)
     const title = queryByText(/product test/i)
-    const price = queryByText(/R\$ 20.00/i)
+    const price = queryByText(/R\$ 20.12/i)
     expect(wrapper).toBeVisible()
     expect(title).toBeVisible()
     expect(price).toBeVisible()
