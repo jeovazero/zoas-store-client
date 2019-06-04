@@ -54,16 +54,17 @@ const CardStyled = styled(Card)({
   alignItems: 'center',
   padding: '0.75rem 1rem 0rem',
   boxSizing: 'border-box',
-  transition: 'all ease-in-out 0.1s',
+  transition: 'all ease 0.07s',
   '&:hover': {
-    transform: 'scale(1.1) translateX(16px)',
+    transform: 'scale(1.02) translateX(6px)',
     boxShadow: '0px 0px 15px rgba(0,0,0,0.1)'
   }
 })
 
 const CardMediaStyled = styled(CardMedia)({
   width: 120,
-  height: 120
+  height: 120,
+  backgroundSize: 'contain'
 })
 
 const Details = styled('div')({
