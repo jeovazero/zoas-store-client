@@ -43,11 +43,10 @@ const ProductList = (props: Props) => {
             className={classes.item}
             key={node.id}
             title={node.title}
-            subtitle={node.description}
-            price={`R$ ${node.price}`}
+            price={node.price}
             image={node.photos[0].url}
             isInStock={node.avaliability}
-            onClickDetails={() => {
+            onClick={() => {
               history.push({
                 pathname: '/product',
                 search: `?id=${node.id}`
