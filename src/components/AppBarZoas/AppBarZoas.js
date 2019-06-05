@@ -2,7 +2,6 @@
 import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import ZoasLogo from './zoas-logo.svg'
 import { CartBadge } from '..'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -14,7 +13,9 @@ type Props = {
   /** Quantity of products in the cart */
   totalProducts: number,
   /** className */
-  className?: string
+  className?: string,
+  /* Source address of logo image */
+  srcImageLogo?: string
 }
 
 const useStyles = makeStyles(theme => ({
@@ -39,7 +40,8 @@ const AppBarZoas = (props: Props) => {
     totalProducts,
     className,
     onClickLogo,
-    onClickCart
+    onClickCart,
+    srcImageLogo
   } = props
   const classes = useStyles()
 
@@ -51,7 +53,7 @@ const AppBarZoas = (props: Props) => {
     >
       <Toolbar className={classes.toolbar}>
         <div className={classes.imgContainer} onClick={onClickLogo}>
-          <img src={ZoasLogo} alt='zoas logo' aria-label='zoas logo' />
+          <img src={srcImageLogo} alt='zoas logo' aria-label='zoas logo' />
         </div>
         <CartBadge
           quantity={totalProducts}

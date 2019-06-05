@@ -5,6 +5,7 @@ import AppBarDataType from './__generated__/AppBar_data.graphql'
 import { withRouter } from 'react-router-dom'
 import { graphql, createRefetchContainer } from 'react-relay'
 import { AppBarZoas } from '../../components'
+import zoasLogo from '../../../assets/zoas-logo.svg'
 
 type Props = {
   data: AppBarDataType,
@@ -25,6 +26,7 @@ const AppBar = (props: Props) => {
   return (
     <>
       <AppBarZoas
+        srcImageLogo={zoasLogo}
         totalProducts={quantity}
         totalPrice={price}
         onClickLogo={() => {
