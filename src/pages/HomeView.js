@@ -3,7 +3,7 @@ import React from 'react'
 import relay from '../createRelay'
 import { ProductList } from './containers'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import CartRootRender from './CartRootRender'
+import AppBarRender from './common/AppBarRender'
 import { makeStyles } from '@material-ui/styles'
 import { graphql, QueryRenderer } from 'react-relay'
 
@@ -22,13 +22,13 @@ const Home = () => {
 
   return (
     <div>
-      <CartRootRender>
+      <AppBarRender>
         {() => (
           <div className={classes.root}>
             <QueryRenderer
               environment={relay}
               query={graphql`
-                query HomeQuery {
+                query HomeViewQuery {
                   products {
                     ...ProductList_data
                   }
@@ -51,7 +51,7 @@ const Home = () => {
             />
           </div>
         )}
-      </CartRootRender>
+      </AppBarRender>
     </div>
   )
 }

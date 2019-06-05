@@ -2,7 +2,7 @@
 import React from 'react'
 import relay from '../createRelay'
 import { ProductCartList } from './containers'
-import CartRootRender from './CartRootRender'
+import AppBarRender from './common/AppBarRender'
 import { CircularProgress, Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { graphql, QueryRenderer } from 'react-relay'
@@ -37,7 +37,7 @@ const CartView = () => {
   const total = c => c.reduce((acc, cur) => acc + cur.quantity * cur.price, 0)
   return (
     <div>
-      <CartRootRender>
+      <AppBarRender>
         {({ refetchCart, cart }) => (
           <div className={classes.root}>
             <QueryRenderer
@@ -79,7 +79,7 @@ const CartView = () => {
             </div>
           </div>
         )}
-      </CartRootRender>
+      </AppBarRender>
     </div>
   )
 }

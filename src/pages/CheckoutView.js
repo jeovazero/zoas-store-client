@@ -1,6 +1,6 @@
 // @flow
 import React, { useState, useEffect } from 'react'
-import CartRootRender from './CartRootRender'
+import AppBarRender from './common/AppBarRender'
 import { payCartMutation } from './mutations'
 import { Typography, Button, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
@@ -195,7 +195,7 @@ const CheckoutView = () => {
 
   return (
     <div>
-      <CartRootRender>
+      <AppBarRender>
         {({ refetchCart, cart }) => (
           <div className={classes.root}>
             <Typography variant='h4'>Checkout</Typography>
@@ -249,7 +249,7 @@ const CheckoutView = () => {
             </div>
           </div>
         )}
-      </CartRootRender>
+      </AppBarRender>
     </div>
   )
 }

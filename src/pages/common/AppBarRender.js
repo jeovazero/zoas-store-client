@@ -1,10 +1,10 @@
 import React from 'react'
-import relay from '../createRelay'
-import { AppBar } from './containers'
-import { createCartMutation } from './mutations'
+import relay from '../../createRelay'
+import { AppBar } from '../containers'
+import { createCartMutation } from '../mutations'
 import { graphql, QueryRenderer } from 'react-relay'
 
-const AppBarRender = () => (
+const AppBarRender = ({ children }) => (
   <QueryRenderer
     environment={relay}
     variables={{}}
@@ -16,7 +16,6 @@ const AppBarRender = () => (
       }
     `}
     render={({ error, props, retry }) => {
-      console.log({ error, props })
       if (error) {
         return <p>error.message</p>
       }
@@ -25,7 +24,8 @@ const AppBarRender = () => (
         // No cart, then create one and retry
         createCartMutation({ onComplete: retry })
       }
-      return <AppBar data={props.cart || []} />
+      const cart = props.cart || []
+      return <AppBar data={cart}>{children}</AppBar>
     }}
   />
 )
