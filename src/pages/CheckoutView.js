@@ -1,7 +1,7 @@
 // @flow
 import React, { useState, useEffect } from 'react'
-import AppBarRender from './common/AppBarRender'
-import { payCartMutation } from './mutations'
+import AppBarRender from '../relay/common/AppBarRender'
+import { payCartMutation } from '../relay/mutations'
 import { Typography, Button, TextField } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 

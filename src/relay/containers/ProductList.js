@@ -16,14 +16,15 @@ type Props = {
 const useStyles = makeStyles(theme => {
   return createStyles({
     section: {
-      padding: '2rem',
-      maxWidth: '640px',
+      padding: '0rem',
       display: 'flex',
       justifyContent: 'center'
     },
     ul: {
       margin: 0,
-      padding: 0
+      padding: 0,
+      display: 'flex',
+      flexWrap: 'wrap'
     },
     item: {
       marginBottom: theme.spacing(1)

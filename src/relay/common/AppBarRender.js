@@ -1,5 +1,5 @@
 import React from 'react'
-import relay from '../../createRelay'
+import relay from '../createRelay'
 import { AppBar } from '../containers'
 import { createCartMutation } from '../mutations'
 import { graphql, QueryRenderer } from 'react-relay'

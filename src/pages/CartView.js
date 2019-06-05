@@ -1,8 +1,8 @@
 // @flow
 import React from 'react'
-import relay from '../createRelay'
-import { ProductCartList } from './containers'
-import AppBarRender from './common/AppBarRender'
+import relayEnv from '../relay/createRelay'
+import { ProductCartList } from '../relay/containers'
+import AppBarRender from '../relay/common/AppBarRender'
 import { CircularProgress, Typography, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import { graphql, QueryRenderer } from 'react-relay'
@@ -41,7 +41,7 @@ const CartView = () => {
         {({ refetchCart, cart }) => (
           <div className={classes.root}>
             <QueryRenderer
-              environment={relay}
+              environment={relayEnv}
               query={graphql`
                 query CartViewQuery {
                   cart {

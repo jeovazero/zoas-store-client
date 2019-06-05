@@ -1,5 +1,5 @@
 import uuidv4 from 'uuid/v4'
-import environment from '../../createRelay'
+import environment from '../createRelay'
 import { commitMutation, graphql } from 'react-relay'
 
 const mutation = graphql`

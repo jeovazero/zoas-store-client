@@ -1,27 +1,27 @@
 import uuidv4 from 'uuid/v4'
-import environment from '../../createRelay'
+import environment from '../createRelay'
 import { commitMutation, graphql } from 'react-relay'
 
 const mutation = graphql`
-  mutation PutProductMutation($input: PutProductToCartInput!) {
-    putProductToCart(input: $input) {
+  mutation PayCartMutation($input: PayCartInput!) {
+    payCart(input: $input) {
       payload {
-        id
-        title
-        price
+        customer
+        totalPaid
       }
       clientMutationId
     }
   }
 `
 
-export default ({ productId, quantity = 1 }, onComplete) => {
+export default ({ fullName, address, creditCard }, onComplete) => {
   const clientMutationId = uuidv4()
   const variables = {
     input: {
       clientMutationId,
-      id: productId,
-      quantity
+      address,
+      creditCard,
+      fullName
     }
   }
 
@@ -29,8 +29,8 @@ export default ({ productId, quantity = 1 }, onComplete) => {
     mutation,
     variables,
     onCompleted: (response, errors) => {
-      console.log('put product mutation')
-      onComplete()
+      console.log('pay cart mutation')
+      onComplete({ error: errors, response })
     },
     onError: err => console.error(err)
   })

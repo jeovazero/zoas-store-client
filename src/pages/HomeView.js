@@ -1,58 +1,58 @@
 // @flow
 import React from 'react'
-import relay from '../createRelay'
-import { ProductList } from './containers'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import AppBarRender from './common/AppBarRender'
-import { makeStyles } from '@material-ui/styles'
+import relayEnv from '../relay/createRelay'
+import AppBarRender from '../relay/common/AppBarRender'
+import { ProductList } from '../relay/containers'
+import { styled } from '@material-ui/styles'
 import { graphql, QueryRenderer } from 'react-relay'
+import { Typography, CircularProgress } from '@material-ui/core'
 
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  loader: {
-    padding: '2rem'
-  }
+const CenterWrapper = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  margin: 'auto',
+  maxWidth: theme.breakpoints.values['md']
+}))
+
+const Loader = styled(CircularProgress)({
+  padding: '2rem'
+})
+
+const Title = styled(props => <Typography variant='h4' {...props} />)({
+  padding: '2rem 1rem',
+  width: '100%'
 })
 
 const Home = () => {
-  const classes = useStyles()
-
   return (
-    <div>
-      <AppBarRender>
-        {() => (
-          <div className={classes.root}>
-            <QueryRenderer
-              environment={relay}
-              query={graphql`
-                query HomeViewQuery {
-                  products {
-                    ...ProductList_data
-                  }
+    <AppBarRender>
+      {() => (
+        <CenterWrapper>
+          <Title>Produtos</Title>
+          <QueryRenderer
+            environment={relayEnv}
+            query={graphql`
+              query HomeViewQuery {
+                products {
+                  ...ProductList_data
                 }
-              `}
-              variables={{}}
-              render={({ error, props }) => {
-                if (error) {
-                  return <p>{error.message}</p>
-                }
-                if (!props) {
-                  return (
-                    <div className={classes.loader}>
-                      <CircularProgress />
-                    </div>
-                  )
-                }
-                return <ProductList data={props.products} />
-              }}
-            />
-          </div>
-        )}
-      </AppBarRender>
-    </div>
+              }
+            `}
+            variables={{}}
+            render={({ error, props }) => {
+              if (error) {
+                return <p>{error.message}</p>
+              }
+              if (!props) {
+                return <Loader />
+              }
+              return <ProductList data={props.products} />
+            }}
+          />
+        </CenterWrapper>
+      )}
+    </AppBarRender>
   )
 }
 

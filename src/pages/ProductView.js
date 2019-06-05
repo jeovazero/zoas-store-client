@@ -1,10 +1,10 @@
 import React from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import qs from 'querystring'
-import relay from '../createRelay'
-import AppBarRender from './common/AppBarRender'
-import { Product } from './containers'
-import { putProductMutation } from './mutations'
+import relayEnv from '../relay/createRelay'
+import AppBarRender from '../relay/common/AppBarRender'
+import { Product } from '../relay/containers'
+import { putProductMutation } from '../relay/mutations'
 import { makeStyles } from '@material-ui/styles'
 import { Redirect } from 'react-router-dom'
 import { graphql, QueryRenderer } from 'react-relay'
@@ -50,7 +50,7 @@ const ProductView = (props: Props) => {
         {({ refetchCart, cart }) => (
           <div className={classes.root}>
             <QueryRenderer
-              environment={relay}
+              environment={relayEnv}
               query={graphql`
                 query ProductViewQuery($id: ID!) {
                   product(id: $id) {
