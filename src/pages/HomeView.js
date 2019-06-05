@@ -12,7 +12,7 @@ import {
 } from '../components/common'
 
 const Home = () => {
-  const [isOpenError, setIsOpenError] = React.useState(false)
+  const [errorState, setErrorState] = React.useState('INITIAL') // INITIAL, SHOW, HIDDEN
   return (
     <AppBarRender>
       {() => (
@@ -30,7 +30,10 @@ const Home = () => {
             variables={{}}
             render={({ error, props }) => {
               if (error) {
-                setIsOpenError(true)
+                if (errorState === 'INITIAL') {
+                  console.log('initial')
+                  setErrorState('SHOW')
+                }
                 return <Loader />
               }
               if (!props) {
@@ -40,8 +43,10 @@ const Home = () => {
             }}
           />
           <SnackbarError
-            open={isOpenError}
-            onClose={() => setIsOpenError(false)}
+            open={errorState === 'SHOW'}
+            onClose={() => {
+              setErrorState('HIDDEN')
+            }}
           />
         </CenterWrapper>
       )}

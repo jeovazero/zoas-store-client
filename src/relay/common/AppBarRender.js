@@ -17,14 +17,13 @@ const AppBarRender = ({ children }) => (
     `}
     render={({ error, props, retry }) => {
       if (error) {
-        return <p>error.message</p>
+        return <AppBar data={[]}>{children}</AppBar>
       }
-      if (!props) return <p>Loading</p>
-      if (!props.cart) {
+      if (props && !props.cart) {
         // No cart, then create one and retry
         createCartMutation({ onComplete: retry })
       }
-      const cart = props.cart || []
+      const cart = (props && props.cart) || []
       return <AppBar data={cart}>{children}</AppBar>
     }}
   />

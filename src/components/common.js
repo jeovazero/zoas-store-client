@@ -20,7 +20,11 @@ export const CenterWrapper = styled('div')(({ theme }) => ({
 }))
 
 // Loader
-export const Loader = styled(CircularProgress)({
+export const Loader = styled(() => (
+  <div>
+    <CircularProgress />
+  </div>
+))({
   padding: '2rem'
 })
 
