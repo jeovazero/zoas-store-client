@@ -27,7 +27,12 @@ const AppBar = (props: Props) => {
       <AppBarZoas
         totalProducts={quantity}
         totalPrice={price}
-        onClick={() => {
+        onClickLogo={() => {
+          history.push({
+            pathname: '/'
+          })
+        }}
+        onClickCart={() => {
           history.push({
             pathname: '/mycart'
           })
