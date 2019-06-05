@@ -8,7 +8,8 @@ import {
   CenterWrapper,
   Title,
   Loader,
-  SnackbarError
+  SnackbarError,
+  Footer
 } from '../components/common'
 
 const Home = () => {
@@ -16,39 +17,42 @@ const Home = () => {
   return (
     <AppBarRender>
       {() => (
-        <CenterWrapper>
-          <Title>Produtos</Title>
-          <QueryRenderer
-            environment={relayEnv}
-            query={graphql`
-              query HomeViewQuery {
-                products {
-                  ...ProductList_data
+        <>
+          <CenterWrapper>
+            <Title>Produtos</Title>
+            <QueryRenderer
+              environment={relayEnv}
+              query={graphql`
+                query HomeViewQuery {
+                  products {
+                    ...ProductList_data
+                  }
                 }
-              }
-            `}
-            variables={{}}
-            render={({ error, props }) => {
-              if (error) {
-                if (errorState === 'INITIAL') {
-                  console.log('initial')
-                  setErrorState('SHOW')
+              `}
+              variables={{}}
+              render={({ error, props }) => {
+                if (error) {
+                  if (errorState === 'INITIAL') {
+                    console.log('initial')
+                    setErrorState('SHOW')
+                  }
+                  return <Loader />
                 }
-                return <Loader />
-              }
-              if (!props) {
-                return <Loader />
-              }
-              return <ProductList data={props.products} />
-            }}
-          />
-          <SnackbarError
-            open={errorState === 'SHOW'}
-            onClose={() => {
-              setErrorState('HIDDEN')
-            }}
-          />
-        </CenterWrapper>
+                if (!props) {
+                  return <Loader />
+                }
+                return <ProductList data={props.products} />
+              }}
+            />
+            <SnackbarError
+              open={errorState === 'SHOW'}
+              onClose={() => {
+                setErrorState('HIDDEN')
+              }}
+            />
+          </CenterWrapper>
+          <Footer />
+        </>
       )}
     </AppBarRender>
   )

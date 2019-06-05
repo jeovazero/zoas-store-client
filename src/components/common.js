@@ -9,6 +9,8 @@ import {
   SnackbarContent
 } from '@material-ui/core'
 import { Error as ErrorIcon, Close as CloseIcon } from '@material-ui/icons'
+import zoasLogo from '../../assets/zoas-logo.svg'
+import jeovazeroLogo from '../../assets/jeovazero-logo.png'
 
 // CenterWrapper
 export const CenterWrapper = styled('div')(({ theme }) => ({
@@ -80,3 +82,27 @@ export const SnackbarError = (props: SnackbarProps) => {
     </Snackbar>
   )
 }
+
+// Footer
+export const Footer = styled(props => (
+  <footer {...props}>
+    <CenterWrapper>
+      <img src={zoasLogo} width='200' />
+      <Typography> A Loja só de zoas </Typography>
+      <div>
+        <Typography color='inherit' variant='subtitle2'>
+          criado por{' '}
+        </Typography>
+        <img src={jeovazeroLogo} width='144' />
+      </div>
+    </CenterWrapper>
+  </footer>
+))(({ theme }) => ({
+  marginTop: theme.spacing(4),
+  backgroundColor: theme.palette.primary.main,
+  padding: theme.spacing(4),
+  color: theme.palette.primary.contrastText,
+  '& div div': {
+    paddingTop: theme.spacing(3)
+  }
+}))
