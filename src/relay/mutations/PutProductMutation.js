@@ -15,7 +15,7 @@ const mutation = graphql`
   }
 `
 
-export default ({ productId, quantity = 1 }, onComplete) => {
+export default ({ productId, quantity = 1 }, onComplete, onError) => {
   const clientMutationId = uuidv4()
   const variables = {
     input: {
@@ -29,9 +29,16 @@ export default ({ productId, quantity = 1 }, onComplete) => {
     mutation,
     variables,
     onCompleted: (response, errors) => {
-      console.log('put product mutation')
-      onComplete()
+      console.log('put product mutation', { response, errors })
+      if (!errors) onComplete()
+      else {
+        console.log('chama')
+        onError(errors)
+      }
     },
-    onError: err => console.error(err)
+    onError: err => {
+      onError && onError(err)
+      console.error(err)
+    }
   })
 }
