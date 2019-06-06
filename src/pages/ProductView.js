@@ -6,7 +6,12 @@ import { Product } from '../relay/containers'
 import { putProductMutation } from '../relay/mutations'
 import { Redirect } from 'react-router-dom'
 import { graphql, QueryRenderer } from 'react-relay'
-import { Loader, CenterWrapper, Footer } from '../components/common'
+import {
+  Loader,
+  CenterWrapper,
+  Footer,
+  SnackbarWarning
+} from '../components/common'
 
 type Props = {
   history: {
@@ -34,7 +39,7 @@ const ProductView = (props: Props) => {
 
   const productId = obj['id']
   const productCartId = getProductCartId(productId)
-
+  const [snackWarning, setSnackWarning] = React.useState('INITIAL')
   return (
     <AppBarRender>
       {({ refetchCart, cart }) => (
@@ -72,6 +77,15 @@ const ProductView = (props: Props) => {
                         () => {
                           refetchCart()
                           console.log('finish put product')
+                        },
+                        err => {
+                          console.log({ err })
+                          if (
+                            err &&
+                            err[0].code === 'INVALID_PRODUCT_QUANTITY'
+                          ) {
+                            setSnackWarning('SHOW')
+                          }
                         }
                       )
                     }}
@@ -80,6 +94,13 @@ const ProductView = (props: Props) => {
               }}
             />
           </CenterWrapper>
+          <SnackbarWarning
+            message='Desculpe, quantidade máxima do estoque do produto atingida!'
+            open={snackWarning === 'SHOW'}
+            onClose={() => {
+              setSnackWarning('HIDDEN')
+            }}
+          />
           <Footer />
         </>
       )}

@@ -37,8 +37,9 @@ export const Title = styled(props => <Typography variant='h4' {...props} />)({
 })
 
 // Snackbar
-const SnackbarContentError = styled(SnackbarContent)(({ theme }) => ({
-  backgroundColor: theme.palette.error.dark,
+const SnackbarContentError = styled(SnackbarContent)(({ theme, kind }) => ({
+  backgroundColor: kind === 'error' ? theme.palette.error.dark : '#f8ffce',
+  color: kind === 'error' ? 'white' : 'black',
   flexWrap: 'nowrap'
 }))
 
@@ -55,7 +56,7 @@ type SnackbarProps = {
   message?: string
 }
 
-export const SnackbarError = (props: SnackbarProps) => {
+const SnackbarCustom = (Icon, kind) => (props: SnackbarProps) => {
   const {
     onClose,
     message = 'Um erro inesperado ocorreu! Tente novamente mais tarde',
@@ -67,9 +68,10 @@ export const SnackbarError = (props: SnackbarProps) => {
       {...spread}
     >
       <SnackbarContentError
+        kind={kind}
         message={
           <SnackMessage>
-            <ErrorIcon />
+            <Icon />
             {message}
           </SnackMessage>
         }
@@ -82,6 +84,9 @@ export const SnackbarError = (props: SnackbarProps) => {
     </Snackbar>
   )
 }
+
+export const SnackbarError = SnackbarCustom(ErrorIcon, 'error')
+export const SnackbarWarning = SnackbarCustom(ErrorIcon, 'warning')
 
 // Footer
 export const Footer = styled(props => (
