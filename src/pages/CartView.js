@@ -1,45 +1,126 @@
 // @flow
 import React from 'react'
 import relayEnv from '../relay/createRelay'
-import { ProductCartList } from '../relay/containers'
 import AppBarRender from '../relay/common/AppBarRender'
-import { CircularProgress, Typography, Button } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
+import { ProductCartList } from '../relay/containers'
+import { Typography, Button } from '@material-ui/core'
+import { styled } from '@material-ui/styles'
 import { graphql, QueryRenderer } from 'react-relay'
 import { Link } from 'react-router-dom'
+import {
+  Loader,
+  CenterWrapper,
+  Footer,
+  Title,
+  SnackbarWarning
+} from '../components/common'
+import sadIcon from '../../assets/bolotinha_sad.svg'
 
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column'
+const CenterWrapper2 = styled(CenterWrapper)({
+  maxWidth: '600px',
+  '@media screen and (max-width: 600px)': {
+    width: '100%',
+    padding: '0 0.75rem'
+  }
+})
+
+const Title2 = styled(Title)({
+  '@media screen and (max-width: 600px)': {
+    fontSize: '1.5rem'
+  }
+})
+
+const TotalPriceContainer = styled('div')({
+  marginTop: '1rem',
+  display: 'flex',
+  justifyContent: 'space-between',
+  flexGrow: 1,
+  marginBottom: '3rem',
+  '@media screen and (max-width: 600px)': {
+    '& h4': {
+      fontSize: '1.5rem'
+    }
+  }
+})
+
+const ButtonFull = styled(Button)({
+  width: '100%'
+})
+
+const Separator = styled('div')(({ theme }) => ({
+  width: '100%',
+  height: '1px',
+  borderRadius: '4px',
+  backgroundColor: theme.palette.grey['400'],
+  margin: '1rem 0 2rem'
+}))
+
+const Details = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  paddingBottom: '4rem'
+})
+
+const getTotalOfCart = cart =>
+  cart
+    .reduce((acc, cur) => acc + cur.quantity * cur.price, 0)
+    .toFixed(2)
+    .replace('.', ',')
+
+const CartTotalDetails = ({ cart }) => (
+  <>
+    <Separator />
+    <Details>
+      <TotalPriceContainer>
+        <Typography variant='h4'>Total</Typography>
+        <Typography variant='h4'>{`R$ ${getTotalOfCart(cart)}`}</Typography>
+      </TotalPriceContainer>
+      <Link to='/checkout'>
+        <ButtonFull size='large' variant='contained' color='primary'>
+          Checkout
+        </ButtonFull>
+      </Link>
+    </Details>
+  </>
+)
+
+const CartVoid = styled(props => (
+  <div {...props}>
+    <img src={sadIcon} />
+    <Typography variant='h4'> Seu carrinho está vazio! </Typography>
+  </div>
+))({
+  padding: '2rem 0',
+  maxWidth: '400px',
+  width: '100%',
+  textAlign: 'center',
+  '& img': {
+    width: '100%',
+    maxWidth: '300px',
+    '@media screen and (max-width: 600px)': {
+      maxWidth: '200px'
+    }
   },
-  loader: {
-    padding: '2rem'
-  },
-  total: {
-    marginTop: '1rem',
-    display: 'flex',
-    justifyContent: 'space-between',
-    flexGrow: 1,
-    marginBottom: '2rem'
-  },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-    maxWidth: '412px',
-    width: '100%'
+  '& h4': {
+    padding: '1rem 0'
   }
 })
 
 const CartView = () => {
-  const classes = useStyles()
-  const total = c => c.reduce((acc, cur) => acc + cur.quantity * cur.price, 0)
+  const [snackWarning, setSnackWarning] = React.useState('INITIAL') // SHOW, HIDDEN
+  const errorHandler = errors => {
+    if (errors && errors[0].code === 'INVALID_PRODUCT_QUANTITY') {
+      setSnackWarning('SHOW')
+    }
+  }
+
   return (
-    <div>
-      <AppBarRender>
-        {({ refetchCart, cart }) => (
-          <div className={classes.root}>
+    <AppBarRender>
+      {({ refetchCart, cart }) => (
+        <>
+          <CenterWrapper2>
+            <Title2>Carrinho</Title2>
             <QueryRenderer
               environment={relayEnv}
               query={graphql`
@@ -55,32 +136,30 @@ const CartView = () => {
                   return <p>{error.message}</p>
                 }
                 if (!props) {
-                  return (
-                    <div className={classes.loader}>
-                      <CircularProgress />
-                    </div>
-                  )
+                  return <Loader />
                 }
                 return (
-                  <ProductCartList data={props.cart} onChange={refetchCart} />
+                  <ProductCartList
+                    data={props.cart || []}
+                    onChange={refetchCart}
+                    onError={errorHandler}
+                  />
                 )
               }}
             />
-            <div className={classes.details}>
-              <div className={classes.total}>
-                <Typography variant='h3'>Total</Typography>
-                <Typography variant='h3'>{`R$ ${total(cart)}`}</Typography>
-              </div>
-              <Link to='/checkout'>
-                <Button size='large' variant='contained' color='primary'>
-                  Checkout
-                </Button>
-              </Link>
-            </div>
-          </div>
-        )}
-      </AppBarRender>
-    </div>
+            {cart.length > 0 ? <CartTotalDetails cart={cart} /> : <CartVoid />}
+          </CenterWrapper2>
+          <SnackbarWarning
+            message='Desculpe, quantidade máxima do estoque do produto atingida!'
+            open={snackWarning === 'SHOW'}
+            onClose={() => {
+              setSnackWarning('HIDDEN')
+            }}
+          />
+          <Footer />
+        </>
+      )}
+    </AppBarRender>
   )
 }
 

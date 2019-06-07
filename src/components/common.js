@@ -32,7 +32,7 @@ export const Loader = styled(() => (
 
 // Title
 export const Title = styled(props => <Typography variant='h4' {...props} />)({
-  padding: '2rem 1rem',
+  padding: '2rem 0rem',
   width: '100%'
 })
 

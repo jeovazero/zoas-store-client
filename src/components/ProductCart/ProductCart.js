@@ -35,10 +35,10 @@ const Root = styled('div')({
 
 const Wrapper = styled('div')(({ theme }) => ({
   display: 'flex',
-  padding: `${theme.spacing(2)}px ${theme.spacing(1)}px`,
+  padding: `${theme.spacing(2)}px ${theme.spacing(2)}px`,
   boxSizing: 'border-box',
   maxWidth: '600px',
-  minWidth: '320px',
+  minWidth: '296px',
   position: 'relative',
   borderRadius: theme.spacing(1),
   boxShadow: '0px 5px 18px rgba(0, 0, 0, 0.1)',
@@ -47,17 +47,25 @@ const Wrapper = styled('div')(({ theme }) => ({
 }))
 
 const CardMediaStyled = styled(CardMedia)({
-  minWidth: '120px',
-  minHeight: '120px'
+  minWidth: '100px',
+  minHeight: '100px',
+  backgroundSize: 'contain',
+  '@media screen and (max-width: 480px)': {
+    minWidth: '80px'
+  }
 })
 
 const Details = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   flexGrow: 1,
-  paddingLeft: theme.spacing(1),
+  paddingTop: theme.spacing(2),
+  paddingBottom: theme.spacing(2),
+  paddingLeft: theme.spacing(2),
+  paddingRight: theme.spacing(3),
   justifyContent: 'center',
-  maxWidth: '300px'
+  maxWidth: '300px',
+  overflow: 'hidden'
 }))
 
 const Title = styled(props => <Typography variant='body1' {...props} />)(
@@ -72,15 +80,15 @@ const Title = styled(props => <Typography variant='body1' {...props} />)(
 
 const Price = styled(props => <Typography variant='body1' {...props} />)(
   ({ theme }) => ({
-    color: theme.palette.primary.light,
+    color: theme.palette.primary.dark,
     fontWeight: 'bolder'
   })
 )
 
 const Container = styled('div')(({ theme }) => ({
   display: 'flex',
-  marginTop: theme.spacing(2),
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
+  flexWrap: 'wrap'
 }))
 
 const QuantityControl = styled('div')({
@@ -142,7 +150,7 @@ const InputNumber = styled(
 })
 
 const formatPrice = n => {
-  const value = parseInt(n) || 0
+  const value = parseFloat(n) || 0
   return value.toFixed(2)
 }
 

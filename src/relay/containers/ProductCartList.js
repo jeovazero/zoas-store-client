@@ -11,29 +11,32 @@ type Props = {
   relay: {
     refetch: () => mixed
   },
-  onChange: () => mixed
+  onChange: () => mixed,
+  onError: () => mixed
 }
 
 const useStyles = makeStyles(theme => {
   return createStyles({
     section: {
-      padding: '2rem',
-      maxWidth: '640px',
       display: 'flex',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      width: '100%',
+      padding: 0
     },
     ul: {
+      width: '100%',
       margin: 0,
       padding: 0
     },
     item: {
-      marginBottom: theme.spacing(1)
+      margin: 'auto',
+      marginBottom: theme.spacing(6)
     }
   })
 })
 
 const ProductCartList = (props: Props) => {
-  const { data, onChange, relay } = props
+  const { data = [], onChange, onError, relay } = props
   const classes = useStyles()
 
   return (
@@ -50,10 +53,14 @@ const ProductCartList = (props: Props) => {
             quantity={node.quantity}
             maxQuantity={node.quantity + 5}
             onChangeQuantity={quantity => {
-              putProductMutation({ productId: node.id, quantity }, () => {
-                relay.refetch()
-                onChange()
-              })
+              putProductMutation(
+                { productId: node.id, quantity },
+                () => {
+                  relay.refetch()
+                  onChange()
+                },
+                onError
+              )
             }}
             onRemove={() => {
               removeProductMutation({ productId: node.id }, () => {
