@@ -12,9 +12,9 @@ import {
   CenterWrapper,
   Footer,
   Title,
-  SnackbarWarning
+  SnackbarWarning,
+  SadFeedback
 } from '../components/common'
-import sadIcon from '../../assets/bolotinha_sad.svg'
 
 const CenterWrapper2 = styled(CenterWrapper)({
   maxWidth: '600px',
@@ -85,28 +85,6 @@ const CartTotalDetails = ({ cart }) => (
   </>
 )
 
-const CartVoid = styled(props => (
-  <div {...props}>
-    <img src={sadIcon} />
-    <Typography variant='h4'> Seu carrinho está vazio! </Typography>
-  </div>
-))({
-  padding: '2rem 0',
-  maxWidth: '400px',
-  width: '100%',
-  textAlign: 'center',
-  '& img': {
-    width: '100%',
-    maxWidth: '300px',
-    '@media screen and (max-width: 600px)': {
-      maxWidth: '200px'
-    }
-  },
-  '& h4': {
-    padding: '1rem 0'
-  }
-})
-
 const CartView = () => {
   const [snackWarning, setSnackWarning] = React.useState('INITIAL') // SHOW, HIDDEN
   const errorHandler = errors => {
@@ -147,7 +125,13 @@ const CartView = () => {
                 )
               }}
             />
-            {cart.length > 0 ? <CartTotalDetails cart={cart} /> : <CartVoid />}
+            {cart.length > 0 ? (
+              <CartTotalDetails cart={cart} />
+            ) : (
+              <SadFeedback>
+                <Typography variant='h4'>Seu carrinho está vazio!</Typography>
+              </SadFeedback>
+            )}
           </CenterWrapper2>
           <SnackbarWarning
             message='Desculpe, quantidade máxima do estoque do produto atingida!'

@@ -1,7 +1,6 @@
 // @flow
 import React from 'react'
 import { styled } from '@material-ui/styles'
-import { Typography } from '@material-ui/core'
 import celebrationIcon from '../../../assets/celebration.svg'
 import sadIcon from '../../../assets/bolotinha_sad.svg'
 
@@ -9,7 +8,7 @@ const Feedback = icon =>
   styled(props => (
     <div {...props}>
       <img src={icon} />
-      <Typography variant='h4'> {props.children} </Typography>
+      <div> {props.children} </div>
     </div>
   ))({
     margin: 'auto',
@@ -24,7 +23,7 @@ const Feedback = icon =>
         maxWidth: '200px'
       }
     },
-    '& h4': {
+    '& h5, h4, h3, h2, h1': {
       padding: '1rem 0'
     },
     '& strong': {

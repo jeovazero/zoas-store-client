@@ -83,7 +83,18 @@ const CheckoutView = ({ history }) => {
   })
   const [step, setStep] = React.useState(0)
   const arraySteps = new Array(3).fill(0)
-
+  const errorHandler = code => {
+    switch (code) {
+      case 'INVALID_CREDIT_CARD':
+        setStep(1)
+        break
+      case 'LACK_OF_STOCK':
+        history.push({
+          pathname: '/'
+        })
+        break
+    }
+  }
   return (
     <AppBarRender>
       {({ refetchCart, cart }) => (
@@ -128,6 +139,7 @@ const CheckoutView = ({ history }) => {
             <PayCartRender
               payload={{ address, creditCard }}
               refetchCart={refetchCart}
+              goBack={errorHandler}
             />
           )}
         </CenterWrapperFull>

@@ -6,36 +6,13 @@ import type {
   AddressType
 } from '../../components/common'
 import { payCartMutation } from '../mutations'
-import { Typography } from '@material-ui/core'
-import { styled } from '@material-ui/styles'
-import { Loader, Width480 } from '../../components/common'
-import celebrationIcon from '../../../assets/celebration.svg'
-
-const SuccessPayment = styled(props => (
-  <div {...props}>
-    <img src={celebrationIcon} />
-    <Typography variant='h4'> {props.children} </Typography>
-  </div>
-))({
-  margin: 'auto',
-  padding: '2rem 0',
-  maxWidth: '400px',
-  width: '100%',
-  textAlign: 'center',
-  '& img': {
-    width: '100%',
-    maxWidth: '300px',
-    '@media screen and (max-width: 600px)': {
-      maxWidth: '200px'
-    }
-  },
-  '& h4': {
-    padding: '1rem 0'
-  },
-  '& strong': {
-    fontWeight: 'bolder'
-  }
-})
+import { Button, Typography } from '@material-ui/core'
+import {
+  Loader,
+  Width480,
+  SuccessFeedback,
+  SadFeedback
+} from '../../components/common'
 
 type PayloadType = {
   address: AddressType,
@@ -44,12 +21,14 @@ type PayloadType = {
 
 type PayCartProps = {
   payload: PayloadType,
-  refetchCart: () => void
+  refetchCart: () => void,
+  goBack: (code: string) => mixed
 }
 
 const PayCartRender = ({
   payload: { address, creditCard },
-  refetchCart
+  refetchCart,
+  goBack
 }: PayCartProps) => {
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState()
@@ -71,21 +50,62 @@ const PayCartRender = ({
       ({ response, error }) => {
         console.log(error, response)
         if (error) setErr(error)
-        if (response) setData(response.payCart.payload || {})
+        if (response.payCart) setData(response.payCart.payload || {})
         setLoading(false)
         refetchCart()
       }
     )
   }, [])
-  if (err) return <p> err.message </p>
+  if (err) {
+    switch (err[0].code) {
+      case 'INVALID_CREDIT_CARD':
+        return (
+          <SadFeedback>
+            <Typography variant='h5'>
+              Infelimente, o número de cartão fornecido é inválido, retorne para
+              o checkout. <br />
+            </Typography>
+            <Button variant='outlined' onClick={() => goBack(err[0].code)}>
+              Retornar
+            </Button>
+          </SadFeedback>
+        )
+      case 'LACK_OF_STOCK':
+        return (
+          <SadFeedback>
+            <Typography variant='h6'>
+              Neste exato momento, ficamos com falta de estoque do produto
+              <strong>
+                {err[0].message.replace(/(.*("(.+)").*)/g, ' $3 ')}
+              </strong>
+              para a quantidade do pedido. Lamentamos o ocorrido e te convidamos
+              a comprar outro produto! <br />
+            </Typography>
+            <Button variant='outlined' onClick={() => goBack(err[0].code)}>
+              Voltar para loja
+            </Button>
+          </SadFeedback>
+        )
+      default:
+        return (
+          <SadFeedback>
+            <Typography variant='h5'>
+              Um erro inesperado ocorreu! Tente novamente mais tarde.
+            </Typography>
+          </SadFeedback>
+        )
+    }
+  }
   if (loading) return <Loader />
   return (
     <Width480>
-      <SuccessPayment>
-        Compra de{' '}
-        <strong>R$ {data.totalPaid.toFixed(2).replace('.', ',')}</strong> em
-        nome de <strong>{data.customer}</strong> feita com sucesso!
-      </SuccessPayment>
+      <SuccessFeedback>
+        <Typography variant='h5'>
+          Compra de
+          <strong> R$ {data.totalPaid.toFixed(2).replace('.', ',')}</strong> em
+          nome de <strong>{data.customer}</strong> feita com sucesso!
+        </Typography>
+      </SuccessFeedback>
     </Width480>
   )
 }
