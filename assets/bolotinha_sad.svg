@@ -5,15 +5,27 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   id="svg4834"
+   id="svg5510"
    version="1.1"
-   viewBox="0 0 65.820069 49.938345"
-   height="188.74335"
-   width="248.76877">
+   viewBox="0 0 144.1111 114.09832"
+   height="114.09832mm"
+   width="144.1111mm">
   <defs
-     id="defs4828" />
+     id="defs5504">
+    <filter
+       height="1.2090285"
+       y="-0.10451427"
+       width="1.158592"
+       x="-0.079296023"
+       id="filter5426"
+       style="color-interpolation-filters:sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur5428"
+         stdDeviation="4.1096712" />
+    </filter>
+  </defs>
   <metadata
-     id="metadata4831">
+     id="metadata5507">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -25,11 +37,20 @@
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(-0.8348114,-238.65611)"
+     transform="translate(-28.168645,-92.347937)"
      id="layer1">
     <g
-       id="g4793"
-       transform="matrix(0.52916539,0,0,0.52916539,-27.271443,197.77845)">
+       transform="translate(-59.120418,74.036288)"
+       style="fill:#808080;fill-opacity:0.65882353"
+       id="g5403">
+      <path
+         style="opacity:1;fill:#808080;fill-opacity:0.65882353;stroke:none;stroke-width:1.32291663;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.75294118;filter:url(#filter5426)"
+         d="m 220.81918,82.682833 c 6.12549,31.255577 -28.01696,39.863927 -61.92197,39.863927 -33.90501,0 -67.683611,-8.75354 -60.858931,-39.863927 6.112471,-27.86377 29.080011,-53.770065 61.390451,-54.494816 33.10004,-0.742463 56.60678,30.085926 61.39045,54.494816 z"
+         id="path4485-3" />
+    </g>
+    <g
+       transform="translate(-17.452136,21.581201)"
+       id="g4793">
       <g
          id="g4767">
         <g

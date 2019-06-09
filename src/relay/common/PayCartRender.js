@@ -5,9 +5,37 @@ import type {
   CreditCardType,
   AddressType
 } from '../../components/common'
-import { Loader } from '../../components/common'
 import { payCartMutation } from '../mutations'
 import { Typography } from '@material-ui/core'
+import { styled } from '@material-ui/styles'
+import { Loader, Width480 } from '../../components/common'
+import celebrationIcon from '../../../assets/celebration.svg'
+
+const SuccessPayment = styled(props => (
+  <div {...props}>
+    <img src={celebrationIcon} />
+    <Typography variant='h4'> {props.children} </Typography>
+  </div>
+))({
+  margin: 'auto',
+  padding: '2rem 0',
+  maxWidth: '400px',
+  width: '100%',
+  textAlign: 'center',
+  '& img': {
+    width: '100%',
+    maxWidth: '300px',
+    '@media screen and (max-width: 600px)': {
+      maxWidth: '200px'
+    }
+  },
+  '& h4': {
+    padding: '1rem 0'
+  },
+  '& strong': {
+    fontWeight: 'bolder'
+  }
+})
 
 type PayloadType = {
   address: AddressType,
@@ -25,7 +53,7 @@ const PayCartRender = ({
 }: PayCartProps) => {
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState()
-  const [data, setData] = useState({ customer: '' })
+  const [data, setData] = useState({ customer: '', totalPaid: 0 })
   const remap = (obj: FormType) => {
     return Object.keys(obj).reduce((acc, cur) => {
       acc[cur] = obj[cur].value
@@ -52,9 +80,13 @@ const PayCartRender = ({
   if (err) return <p> err.message </p>
   if (loading) return <Loader />
   return (
-    <Typography variant='h4'>
-      Compra em nome de {data.customer} feita com sucesso!
-    </Typography>
+    <Width480>
+      <SuccessPayment>
+        Compra de{' '}
+        <strong>R$ {data.totalPaid.toFixed(2).replace('.', ',')}</strong> em
+        nome de <strong>{data.customer}</strong> feita com sucesso!
+      </SuccessPayment>
+    </Width480>
   )
 }
 
