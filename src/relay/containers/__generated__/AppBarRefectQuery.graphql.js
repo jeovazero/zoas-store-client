@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 57092d83416a2baacf9a756d2067ab96
+ * @relayHash 8ee33a5bbf115aee6b4d67c981569d7c
  */
 
 /* eslint-disable */
@@ -32,6 +32,7 @@ query AppBarRefectQuery {
 
 fragment AppBar_data on ProductCart {
   id
+  title
   price
   quantity
 }
@@ -88,6 +89,13 @@ const node /*: ConcreteRequest*/ = {
           {
             kind: 'ScalarField',
             alias: null,
+            name: 'title',
+            args: null,
+            storageKey: null
+          },
+          {
+            kind: 'ScalarField',
+            alias: null,
             name: 'price',
             args: null,
             storageKey: null
@@ -108,7 +116,7 @@ const node /*: ConcreteRequest*/ = {
     name: 'AppBarRefectQuery',
     id: null,
     text:
-      'query AppBarRefectQuery {\n  cart {\n    ...AppBar_data\n    id\n  }\n}\n\nfragment AppBar_data on ProductCart {\n  id\n  price\n  quantity\n}\n',
+      'query AppBarRefectQuery {\n  cart {\n    ...AppBar_data\n    id\n  }\n}\n\nfragment AppBar_data on ProductCart {\n  id\n  title\n  price\n  quantity\n}\n',
     metadata: {}
   }
 }

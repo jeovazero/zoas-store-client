@@ -6,7 +6,8 @@ import {
   CircularProgress,
   Typography,
   Snackbar,
-  SnackbarContent
+  SnackbarContent,
+  TextField
 } from '@material-ui/core'
 import { Error as ErrorIcon, Close as CloseIcon } from '@material-ui/icons'
 import zoasLogo from '../../assets/zoas-logo.svg'
@@ -111,3 +112,99 @@ export const Footer = styled(props => (
     paddingTop: theme.spacing(3)
   }
 }))
+
+export const SpaceBetween = styled('div')({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'space-between'
+})
+
+export const Width480 = styled('div')({
+  width: '100%',
+  maxWidth: '480px'
+})
+
+export const Subtitle = styled(({ children, ...spread }) => (
+  <div {...spread}>
+    <Typography color='inherit' variant='h5'>
+      {children}
+    </Typography>
+  </div>
+))(({ theme }) => ({
+  width: '100%',
+  padding: '1rem 0',
+  backgroundColor: theme.palette.primary.light,
+  '& h5': {
+    maxWidth: '480px',
+    margin: 'auto',
+    color: theme.palette.primary.contrastText
+  }
+}))
+
+const FormStyled = styled(Width480)({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '1rem 0'
+})
+
+type FormEntry = {|
+  label: string,
+  value: string
+|}
+
+export type AddressType = {|
+  city: FormEntry,
+  country: FormEntry,
+  district: FormEntry,
+  name: FormEntry,
+  number: FormEntry,
+  street: FormEntry,
+  zipcode: FormEntry
+|}
+
+export type CreditCardType = {|
+  cardNumber: FormEntry,
+  cvv: FormEntry,
+  expirationDate: FormEntry
+|}
+
+export type FormType = $Shape<CreditCardType & AddressType>
+
+type FormProps = {|
+  setForm: any => mixed,
+  form: FormType
+|}
+
+export type ProductType = {|
+  id: string,
+  quantity: number,
+  price: number,
+  title: string
+|}
+
+export const Form = ({ setForm, form }: FormProps) => {
+  const handleChange = e => {
+    const { name, value } = e.target
+    setForm({ ...form, [name]: { ...form[name], value } })
+  }
+
+  return (
+    <FormStyled>
+      {Object.keys(form).map(key => {
+        const { label, value, ...others } = form[key]
+        return (
+          <TextField
+            name={key}
+            label={label}
+            key={key}
+            value={value}
+            required
+            onChange={handleChange}
+            margin='normal'
+            inputProps={others}
+          />
+        )
+      })}
+    </FormStyled>
+  )
+}

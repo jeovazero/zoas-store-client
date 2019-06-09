@@ -51,6 +51,7 @@ export default createRefetchContainer(
     data: graphql`
       fragment AppBar_data on ProductCart @relay(plural: true) {
         id
+        title
         price
         quantity
       }

@@ -13,6 +13,7 @@ declare export opaque type AppBar_data$ref: FragmentReference;
 declare export opaque type AppBar_data$fragmentType: AppBar_data$ref;
 export type AppBar_data = $ReadOnlyArray<{|
   +id: string,
+  +title: ?string,
   +price: ?number,
   +quantity: ?number,
   +$refType: AppBar_data$ref,
@@ -43,6 +44,13 @@ const node /*: ReaderFragment*/ = {
     {
       kind: 'ScalarField',
       alias: null,
+      name: 'title',
+      args: null,
+      storageKey: null
+    },
+    {
+      kind: 'ScalarField',
+      alias: null,
       name: 'price',
       args: null,
       storageKey: null
@@ -57,5 +65,5 @@ const node /*: ReaderFragment*/ = {
   ]
 }
 // prettier-ignore
-;(node/*: any*/).hash = '30516906d8883e8373e0224d6688382a';
+;(node/*: any*/).hash = '1f01445c19a8b54c7fd9651c0c13135f';
 module.exports = node
