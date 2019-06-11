@@ -6,10 +6,10 @@ import CheckoutResume from './CheckoutResume'
 import { AppBarRender, PayCartRender } from '../../relay/common'
 import { Stepper, Step, StepLabel } from '@material-ui/core'
 import { styled } from '@material-ui/styles'
-import { CenterWrapper, Title } from '../../components/common'
+import { CenterWrapperBase, Title } from '../../components/common'
 import { withRouter } from 'react-router-dom'
 
-const CenterWrapperFull = styled(CenterWrapper)({
+const CenterWrapperFull = styled(CenterWrapperBase)({
   maxWidth: 'none',
   paddingBottom: '4rem'
 })
@@ -27,6 +27,14 @@ const DarkHeader = styled('div')(({ theme }) => ({
     alignItems: 'center',
     margin: 'auto',
     width: '100%'
+  },
+  [theme.breakpoints.up('xxs')]: {
+    paddingLeft: '0.75rem',
+    paddingRight: '0.75rem'
+  },
+  [theme.breakpoints.up('sm')]: {
+    paddingLeft: 0,
+    paddingRight: 0
   }
 }))
 
