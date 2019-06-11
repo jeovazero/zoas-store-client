@@ -59,6 +59,9 @@ const useStyles = makeStyles(theme => {
     grey: {
       color: theme.palette.primary.light
     },
+    darkred: {
+      color: theme.palette.error.dark
+    },
     buttonWrapper: {
       textAlign: 'center'
     },
@@ -88,7 +91,9 @@ const Product = (props: Props) => {
             <Typography className={classes.fontSecondary} variant='h4'>
               {`R$ ${data.price.toFixed(2)}`}
             </Typography>
-            <Typography className={classes.darkgrey}>
+            <Typography
+              className={data.avaliability ? classes.grey : classes.darkred}
+            >
               {data.avaliability ? 'Em estoque' : 'Sem estoque'}
             </Typography>
           </div>
@@ -99,6 +104,7 @@ const Product = (props: Props) => {
               size='large'
               onClick={() => onBuy({ productId: data.id, quantity: 1 })}
               className={classes.fullWidth}
+              disabled={!data.avaliability}
             >
               Comprar
             </Button>
