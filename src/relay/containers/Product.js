@@ -3,7 +3,7 @@ import React from 'react'
 import ProductDataType from './__generated__/Product_data.graphql'
 import { Typography, Button } from '@material-ui/core'
 import { graphql, createFragmentContainer } from 'react-relay'
-import { makeStyles, createStyles } from '@material-ui/styles'
+import { styled } from '@material-ui/styles'
 import { Carousel } from '../../components'
 import { Title } from '../../components/common'
 
@@ -12,106 +12,118 @@ type Props = {
   onBuy: mixed => mixed
 }
 
-const useStyles = makeStyles(theme => {
-  return createStyles({
-    section: {
-      padding: '0 6rem',
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      '@media screen and (max-width: 880px)': {
-        padding: 0,
-        alignItems: 'center'
-      }
-    },
-    wrapper: {
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'space-between',
-      flexWrap: 'wrap',
-      '@media screen and (max-width: 880px)': {
-        justifyContent: 'center',
-        maxWidth: '480px',
-        boxSizing: 'border-box',
-        padding: '0.75rem'
-      }
-    },
-    detailsContainer: {
-      maxWidth: '380px'
-    },
-    priceContainer: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: '1.2rem 0 2.2rem'
-    },
-    fontSecondary: {
-      fontFamily: theme.typography.fontFamilySecondary,
-      fontWeigth: 'bold'
-    },
-    title: {
-      alignText: 'center'
-    },
-    description: {
-      marginTop: '1rem',
-      marginBottom: '1rem'
-    },
-    grey: {
-      color: theme.palette.primary.light
-    },
-    darkred: {
-      color: theme.palette.error.dark
-    },
-    buttonWrapper: {
-      textAlign: 'center'
-    },
-    fullWidth: {
-      width: '100%'
-    }
-  })
+const Title2 = styled(Title)(({ theme }) => ({
+  [theme.breakpoints.up('xxs')]: {
+    padding: '2rem 0.75rem'
+  },
+  [theme.breakpoints.up('md')]: {
+    padding: '2rem 0rem'
+  }
+}))
+
+const Section = styled('section')(({ theme }) => ({
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  [theme.breakpoints.up('md')]: {
+    padding: '0 6rem'
+  }
+}))
+
+const Wrapper = styled('div')(({ theme }) => ({
+  width: '100%',
+  display: 'flex',
+  flexWrap: 'wrap',
+  boxSizing: 'border-box',
+  [theme.breakpoints.up('xxs')]: {
+    justifyContent: 'center',
+    padding: '0.75rem'
+  },
+  [theme.breakpoints.up('sm')]: {
+    justifyContent: 'space-between'
+  },
+  [theme.breakpoints.up('md')]: {
+    padding: 0
+  }
+}))
+
+const GreyText = styled(Typography)(({ theme }) => ({
+  color: theme.palette.primary.light
+}))
+
+const DarkRedText = styled(Typography)(({ theme }) => ({
+  color: theme.palette.error.dark
+}))
+
+const DescriptionText = styled(GreyText)({
+  marginTop: '1rem',
+  marginBottom: '1rem'
+})
+
+const FontSecondaryBold = styled(Typography)(({ theme }) => ({
+  fontFamily: theme.typography.fontFamilySecondary,
+  fontWeigth: 'bold'
+}))
+
+const DetailsContainer = styled('div')(({ theme }) => ({
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    width: '290px'
+  },
+  [theme.breakpoints.up('md')]: {
+    width: '360px'
+  }
+}))
+
+const ButtonFull = styled(Button)({
+  width: '100%'
+})
+
+const ButtonWrapper = styled('div')({
+  textAlign: 'center'
+})
+
+const PriceContainer = styled('div')({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '1.2rem 0 2.2rem'
 })
 
 const Product = (props: Props) => {
   const { data, onBuy } = props
-  const classes = useStyles()
 
   return (
-    <section className={classes.section}>
-      <Title className={classes.title}>{data.title}</Title>
-      <div className={classes.wrapper}>
+    <Section>
+      <Title2>{data.title}</Title2>
+      <Wrapper>
         <Carousel images={data.photos.map(x => x.url)} />
-        <div className={classes.detailsContainer}>
-          <Typography
-            variant='h5'
-            className={[classes.description, classes.darkgrey].join(' ')}
-          >
-            {data.description}
-          </Typography>
-          <div className={classes.priceContainer}>
-            <Typography className={classes.fontSecondary} variant='h4'>
+        <DetailsContainer>
+          <DescriptionText variant='h6'>{data.description}</DescriptionText>
+          <PriceContainer>
+            <FontSecondaryBold variant='h4'>
               {`R$ ${data.price.toFixed(2)}`}
-            </Typography>
-            <Typography
-              className={data.avaliability ? classes.grey : classes.darkred}
-            >
-              {data.avaliability ? 'Em estoque' : 'Sem estoque'}
-            </Typography>
-          </div>
-          <div className={classes.buttonWrapper}>
-            <Button
+            </FontSecondaryBold>
+            {data.avaliability ? (
+              <GreyText>Em estoque</GreyText>
+            ) : (
+              <DarkRedText>Sem estoque</DarkRedText>
+            )}
+          </PriceContainer>
+          <ButtonWrapper>
+            <ButtonFull
               variant='contained'
               color='primary'
               size='large'
               onClick={() => onBuy({ productId: data.id, quantity: 1 })}
-              className={classes.fullWidth}
               disabled={!data.avaliability}
             >
               Comprar
-            </Button>
-          </div>
-        </div>
-      </div>
-    </section>
+            </ButtonFull>
+          </ButtonWrapper>
+        </DetailsContainer>
+      </Wrapper>
+    </Section>
   )
 }
 
