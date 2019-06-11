@@ -15,4 +15,14 @@ const typography = {
   }
 }
 
-export default createMuiTheme({ palette, themeName, typography })
+const breakpoints = {
+  keys: ['xxs', 'xs', 'sm', 'md'],
+  values: {
+    xxs: 320,
+    xs: 480,
+    sm: 640,
+    md: 960
+  }
+}
+
+export default createMuiTheme({ palette, themeName, typography, breakpoints })
