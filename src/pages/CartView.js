@@ -16,32 +16,33 @@ import {
   SadFeedback
 } from '../components/common'
 
-const CenterWrapper2 = styled(CenterWrapper)({
-  maxWidth: '600px',
-  '@media screen and (max-width: 600px)': {
-    width: '100%',
-    padding: '0 0.75rem'
+const CenterWrapper2 = styled(CenterWrapper)(({ theme }) => ({
+  maxWidth: theme.breakpoints.values['sm'],
+  [theme.breakpoints.up('xxs')]: {
+    padding: '0 0.75rem',
+    width: '100%'
+  },
+  [theme.breakpoints.up('xs')]: {
+    padding: '0 1rem',
+    width: 'auto'
+  },
+  [theme.breakpoints.up('sm')]: {
+    padding: '0 2rem'
   }
-})
+}))
 
-const Title2 = styled(Title)({
-  '@media screen and (max-width: 600px)': {
-    fontSize: '1.5rem'
-  }
-})
-
-const TotalPriceContainer = styled('div')({
+const TotalPriceContainer = styled('div')(({ theme }) => ({
   marginTop: '1rem',
   display: 'flex',
   justifyContent: 'space-between',
   flexGrow: 1,
   marginBottom: '3rem',
-  '@media screen and (max-width: 600px)': {
+  [theme.breakpoints.down('xs')]: {
     '& h4': {
-      fontSize: '1.5rem'
+      fontSize: '1.75rem'
     }
   }
-})
+}))
 
 const ButtonFull = styled(Button)({
   width: '100%'
@@ -98,7 +99,7 @@ const CartView = () => {
       {({ refetchCart, cart }) => (
         <>
           <CenterWrapper2>
-            <Title2>Carrinho</Title2>
+            <Title>Carrinho</Title>
             <QueryRenderer
               environment={relayEnv}
               query={graphql`
