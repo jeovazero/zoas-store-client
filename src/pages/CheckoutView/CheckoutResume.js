@@ -13,6 +13,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  TableFooter,
   Typography,
   Button
 } from '@material-ui/core'
@@ -41,6 +42,9 @@ const CheckoutResume = ({
   goNext,
   goPrevious
 }: Props) => {
+  const totalPrice = formatMoney(
+    cart.reduce((acc, cur) => acc + cur.quantity * cur.price, 0)
+  )
   return (
     <>
       <Subtitle>Resumo</Subtitle>
@@ -66,6 +70,14 @@ const CheckoutResume = ({
                 </TableRow>
               ))}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell>Total</TableCell>
+                <TableCell> -------- </TableCell>
+                <TableCell> -------- </TableCell>
+                <TableCell> {totalPrice} </TableCell>
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
         <TableContainer>
