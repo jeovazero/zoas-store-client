@@ -11,6 +11,11 @@ import {
   SnackbarError,
   Footer
 } from '../components/common'
+import { styled } from '@material-ui/styles'
+
+const Title2 = styled(Title)({
+  padding: '2rem 0.75rem'
+})
 
 const Home = () => {
   const [errorState, setErrorState] = React.useState('INITIAL') // INITIAL, SHOW, HIDDEN
@@ -19,7 +24,7 @@ const Home = () => {
       {() => (
         <>
           <CenterWrapper>
-            <Title>Produtos</Title>
+            <Title2>Produtos</Title2>
             <QueryRenderer
               environment={relayEnv}
               query={graphql`
