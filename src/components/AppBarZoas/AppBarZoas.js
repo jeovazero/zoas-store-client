@@ -23,7 +23,8 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     display: 'flex',
     justifyContent: 'center',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    paddingLeft: '48px'
   },
   toolbar: {
     [theme.breakpoints.up('md')]: {
