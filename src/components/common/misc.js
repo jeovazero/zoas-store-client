@@ -6,12 +6,27 @@ import zoasLogo from '../../../assets/zoas-logo.svg'
 import jeovazeroLogo from '../../../assets/jeovazero-logo.png'
 
 // CenterWrapper
-export const CenterWrapper = styled('div')(({ theme }) => ({
+export const CenterWrapperBase = styled('div')({
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'column',
   margin: 'auto',
-  maxWidth: theme.breakpoints.values['md']
+  boxSizing: 'border-box'
+})
+
+export const CenterWrapper = styled(CenterWrapperBase)(({ theme }) => ({
+  [theme.breakpoints.up('xxs')]: {
+    width: theme.breakpoints.values['xxs']
+  },
+  [theme.breakpoints.up('xs')]: {
+    width: theme.breakpoints.values['xs']
+  },
+  [theme.breakpoints.up('sm')]: {
+    width: theme.breakpoints.values['sm']
+  },
+  [theme.breakpoints.up('md')]: {
+    width: theme.breakpoints.values['md']
+  }
 }))
 
 // Loader
@@ -24,15 +39,20 @@ export const Loader = styled(() => (
 })
 
 // Title
-export const Title = styled(props => <Typography variant='h4' {...props} />)({
-  padding: '2rem 0rem',
-  width: '100%'
-})
+export const Title = styled(props => <Typography variant='h4' {...props} />)(
+  ({ theme }) => ({
+    padding: '2rem 0rem',
+    width: '100%',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '1.75rem'
+    }
+  })
+)
 
 // Footer
 export const Footer = styled(props => (
   <footer {...props}>
-    <CenterWrapper>
+    <CenterWrapperBase>
       <img src={zoasLogo} width='200' />
       <Typography> A Loja só de zoas </Typography>
       <div>
@@ -41,7 +61,7 @@ export const Footer = styled(props => (
         </Typography>
         <img src={jeovazeroLogo} width='144' />
       </div>
-    </CenterWrapper>
+    </CenterWrapperBase>
   </footer>
 ))(({ theme }) => ({
   marginTop: theme.spacing(4),
@@ -59,10 +79,16 @@ export const SpaceBetween = styled('div')({
   justifyContent: 'space-between'
 })
 
-export const Width480 = styled('div')({
+export const Width480 = styled('div')(({ theme }) => ({
   width: '100%',
-  maxWidth: '480px'
-})
+  maxWidth: theme.breakpoints.values['xs'],
+  [theme.breakpoints.up('xxs')]: {
+    padding: '0 0.75rem'
+  },
+  [theme.breakpoints.up('sm')]: {
+    padding: 0
+  }
+}))
 
 export const Subtitle = styled(({ children, ...spread }) => (
   <div {...spread}>
@@ -72,11 +98,16 @@ export const Subtitle = styled(({ children, ...spread }) => (
   </div>
 ))(({ theme }) => ({
   width: '100%',
-  padding: '1rem 0',
   backgroundColor: theme.palette.primary.light,
   '& h5': {
     maxWidth: '480px',
     margin: 'auto',
     color: theme.palette.primary.contrastText
+  },
+  [theme.breakpoints.up('xxs')]: {
+    padding: '1rem 0.75rem'
+  },
+  [theme.breakpoints.up('sm')]: {
+    padding: '1rem 0'
   }
 }))

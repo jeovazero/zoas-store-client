@@ -7,7 +7,8 @@ import { Width480 } from './misc'
 const FormStyled = styled(Width480)({
   display: 'flex',
   flexDirection: 'column',
-  padding: '1rem 0'
+  paddingTop: '1rem',
+  paddingBottom: '1rem'
 })
 
 type FormEntry = {|
