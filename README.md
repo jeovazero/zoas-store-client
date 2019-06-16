@@ -21,6 +21,13 @@ This project use:
 - [react-testing-libray](https://github.com/testing-library/react-testing-library)
 - [Jest](https://github.com/facebook/jest)
 
+
+<div align="center">
+
+![zoas-gif](https://user-images.githubusercontent.com/11683201/59558064-b9c91780-8fbf-11e9-95d6-9e9bfea1ae78.gif)
+
+</div>
+
 ## Scripts
 
 #### `yarn install`
@@ -62,6 +69,30 @@ This project use:
 #### `yarn test:watch`
 
 > Run the tests in watch mode
+
+
+## Docker :whale:
+
+#### Building
+
+```
+docker-compose build
+```
+
+#### Running
+
+```
+docker-compose up
+```
+
+> Client Running on: `http://localhost:3001`
+
+## Running the project
+
+1. Before to run the project, you need run this [Zoas Store API](https://github.com/jeovazero/zoas-store-api-graphql)
+2. Run `docker-compose build`
+3. Run `docker-compose up`
+4. Done! Test the application
 
 ## License
 
