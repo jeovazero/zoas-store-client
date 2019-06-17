@@ -40,9 +40,15 @@ module.exports = (_, argv) => {
       splitChunks: {
         name: false,
         cacheGroups: {
+          material: {
+            test: /[\\/]node_modules[\\/]@material-ui/,
+            name: 'vendor~material-ui',
+            chunks: 'all',
+            priority: 1
+          },
           common: {
             test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
+            name: 'vendors~others',
             chunks: 'all'
           }
         }
