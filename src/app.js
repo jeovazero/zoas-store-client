@@ -1,26 +1,20 @@
 import React from 'react'
-import { MuiThemeProvider } from '@material-ui/core/styles'
 import theme from './theme'
-import Button from '@material-ui/core/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { HomeView, ProductView, CartView, CheckoutView } from './pages'
+import { HashRouter as Router, Route } from 'react-router-dom'
+import { ThemeProvider } from '@material-ui/styles'
 
 const App = () => (
-  <MuiThemeProvider theme={theme}>
-    <div>
-      <h3>Hello friend!</h3>
-      <p>Zoas Store - only for zoas</p>
-      <Button variant='contained' color='primary'>
-        A dark button
-      </Button>
-      <Button variant='contained' color='secondary'>
-        {' '}
-        A arcane button{' '}
-      </Button>
-      <Button variant='outlined' color='primary'>
-        {' '}
-        A arcane button{' '}
-      </Button>
-    </div>
-  </MuiThemeProvider>
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <Router>
+      <Route exact path='/' component={HomeView} />
+      <Route path='/product' component={ProductView} />
+      <Route path='/mycart' component={CartView} />
+      <Route path='/checkout' component={CheckoutView} />
+    </Router>
+  </ThemeProvider>
 )
 
 export default App

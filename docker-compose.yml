@@ -1,0 +1,10 @@
+version: "3"
+services:
+  app:
+    build:
+      context: .
+      args:
+        API_URL: "http://localhost:3000"
+    ports:
+      - "3001:80"
+    image: "zoas:frontend"

@@ -1,0 +1,150 @@
+schema {
+  query: Query
+  mutation: Mutations
+}
+
+type Address {
+  city: String
+  country: String
+  zipcode: String
+  street: String
+  number: String
+  district: String
+}
+
+input AddressInput {
+  city: String!
+  country: String!
+  zipcode: String!
+  street: String!
+  number: String!
+  district: String!
+}
+
+input CreateCartInput {
+  clientMutationId: String
+}
+
+type CreateCartPayload {
+  confirmation: String
+  clientMutationId: String
+}
+
+input CreditCardInput {
+  cardNumber: String!
+  expirationDate: String!
+  cvv: String!
+}
+
+input DeleteCartInput {
+  clientMutationId: String
+}
+
+type DeleteCartPayload {
+  confirmation: String
+  clientMutationId: String
+}
+
+type Mutations {
+  createCart(input: CreateCartInput!): CreateCartPayload
+  deleteCart(input: DeleteCartInput!): DeleteCartPayload
+  putProductToCart(input: PutProductToCartInput!): PutProductToCartPayload
+  removeProductOfCart(input: RemoveProductOfCartInput!): RemoveProductOfCartPayload
+  payCart(input: PayCartInput!): PayCartPayload
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+input PayCartInput {
+  fullName: String!
+  address: AddressInput!
+  creditCard: CreditCardInput!
+  clientMutationId: String
+}
+
+type PayCartPayload {
+  payload: PurchaseResult
+  clientMutationId: String
+}
+
+type Photo {
+  url: String!
+}
+
+type PhotoProductCart {
+  url: String
+}
+
+type Product implements Node {
+  id: ID!
+  title: String!
+  price: Float!
+  description: String!
+  avaliable: Int!
+  avaliability: Boolean!
+  photos: [Photo]
+}
+
+type ProductCart implements Node {
+  id: ID!
+  productId: Int
+  title: String
+  description: String
+  price: Float
+  quantity: Int
+  photos: [PhotoProductCart]
+}
+
+type ProductConnection {
+  pageInfo: PageInfo!
+  edges: [ProductEdge]!
+}
+
+type ProductEdge {
+  node: Product
+  cursor: String!
+}
+
+type PurchaseResult {
+  customer: String
+  address: Address
+  totalPaid: Float
+  productsPaid: [ProductCart]
+}
+
+input PutProductToCartInput {
+  id: ID!
+  quantity: Int!
+  clientMutationId: String
+}
+
+type PutProductToCartPayload {
+  payload: [ProductCart]
+  clientMutationId: String
+}
+
+type Query {
+  cart: [ProductCart]
+  product(id: ID!): Product
+  products(before: String, after: String, first: Int, last: Int): ProductConnection
+  node(id: ID!): Node
+}
+
+input RemoveProductOfCartInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type RemoveProductOfCartPayload {
+  payload: [ProductCart]
+  clientMutationId: String
+}

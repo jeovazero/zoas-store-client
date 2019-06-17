@@ -7,19 +7,20 @@
   "author": "contato@jeova.ninja",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.config.js --mode development",
-    "build": "webpack --config webpack.config.js --mode production",
+    "start": "webpack-dev-server --config webpack.config.js --mode development --progress",
+    "build": "webpack --config webpack.config.js --mode production --progress",
     "prettier": "prettier-standard '**/*.{jsx,js}' && yarn lint:fix",
-    "lint:fix": "standard --fix '**/*.{jsx,js}' --parser babel-eslint --plugin flowtype",
+    "lint:fix": "standard '**/*.{jsx,js}' --fix",
     "storybook": "start-storybook -p 9002 -c .storybook",
     "build-storybook": "build-storybook -c .storybook",
+    "relay": "relay-compiler --src ./src --schema ./schema.graphql --extensions js jsx",
     "test": "jest",
     "test:watch": "jest --watch"
   },
   "lint-staged": {
     "*.{jsx,js}": [
       "prettier-standard",
-      "standard --env jest --fix --parser babel-eslint --plugin flowtype",
+      "standard --fix",
       "git add"
     ]
   },
@@ -33,31 +34,54 @@
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@storybook/addon-actions": "^5.0.11",
     "@storybook/addon-info": "^5.0.11",
     "@storybook/addon-knobs": "^5.0.11",
     "@storybook/react": "^5.0.11",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
+    "babel-plugin-relay": "^4.0.0",
     "eslint-plugin-flowtype": "^3.9.0",
     "flow-bin": "^0.98.1",
+    "graphql": "^14.3.1",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^2.3.0",
     "jest": "^24.8.0",
+    "jest-dom": "^3.4.0",
     "lint-staged": "^8.1.7",
     "prettier": "^1.17.1",
     "prettier-standard": "^9.1.1",
     "react-testing-library": "^7.0.0",
+    "relay-compiler": "^4.0.0",
     "standard": "^12.0.1",
     "storybook": "^1.0.0",
-    "storybook-addon-material-ui": "^0.9.0-alpha.19",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.3.1"
   },
   "dependencies": {
-    "@material-ui/core": "^3.9.3",
-    "@material-ui/icons": "^3.0.2",
+    "@material-ui/core": "^4.0.0",
+    "@material-ui/icons": "^4.0.0",
+    "@material-ui/styles": "^4.0.0",
+    "node-fetch": "^2.6.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-relay": "^4.0.0",
+    "react-router-dom": "^5.0.0",
+    "uuid": "^3.3.2"
+  },
+  "standard": {
+    "env": "jest",
+    "fix": true,
+    "plugin": "flowtype",
+    "parser": "babel-eslint",
+    "globals": [
+      "$Shape"
+    ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|eot|svg|ttf|woff|woff2)$": "<rootDir>/__mocks__/fileTransformer.js"
+    }
   }
 }
