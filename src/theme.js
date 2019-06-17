@@ -8,11 +8,21 @@ const palette = {
 const themeName = 'Mine Shaft Cyan / Aqua Chuckwalla'
 
 const typography = {
-  fontFamily: 'Koho, Roboto, sans-serif',
-  fontFamilySecondary: 'Lato, Roboto, sans-serif',
+  fontFamily: 'Lato, Roboto, sans-serif',
+  fontFamilySecondary: 'Kreon, Roboto, sans-serif',
   button: {
     fontWeight: 'bold'
   }
 }
 
-export default createMuiTheme({ palette, themeName, typography })
+const breakpoints = {
+  keys: ['xxs', 'xs', 'sm', 'md'],
+  values: {
+    xxs: 320,
+    xs: 480,
+    sm: 640,
+    md: 960
+  }
+}
+
+export default createMuiTheme({ palette, themeName, typography, breakpoints })

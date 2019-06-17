@@ -7,10 +7,10 @@
   "author": "contato@jeova.ninja",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.config.js --mode development",
-    "build": "webpack --config webpack.config.js --mode production",
+    "start": "webpack-dev-server --config webpack.config.js --mode development --progress",
+    "build": "webpack --config webpack.config.js --mode production --progress",
     "prettier": "prettier-standard '**/*.{jsx,js}' && yarn lint:fix",
-    "lint:fix": "standard '**/*.{jsx,js}'",
+    "lint:fix": "standard '**/*.{jsx,js}' --fix",
     "storybook": "start-storybook -p 9002 -c .storybook",
     "build-storybook": "build-storybook -c .storybook",
     "relay": "relay-compiler --src ./src --schema ./schema.graphql --extensions js jsx",
@@ -20,7 +20,7 @@
   "lint-staged": {
     "*.{jsx,js}": [
       "prettier-standard",
-      "standard",
+      "standard --fix",
       "git add"
     ]
   },
@@ -47,6 +47,7 @@
     "html-webpack-plugin": "^3.2.0",
     "husky": "^2.3.0",
     "jest": "^24.8.0",
+    "jest-dom": "^3.4.0",
     "lint-staged": "^8.1.7",
     "prettier": "^1.17.1",
     "prettier-standard": "^9.1.1",
@@ -75,7 +76,7 @@
     "plugin": "flowtype",
     "parser": "babel-eslint",
     "globals": [
-       "$Shape"
+      "$Shape"
     ]
   },
   "jest": {

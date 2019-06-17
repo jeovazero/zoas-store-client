@@ -1,12 +1,8 @@
 // @flow
 import React from 'react'
-import Slide from '@material-ui/core/Slide'
-import CardMedia from '@material-ui/core/CardMedia'
-import Card from '@material-ui/core/Card'
-import Paper from '@material-ui/core/Paper'
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
-import { makeStyles, createStyles } from '@material-ui/styles'
+import { CardMedia, IconButton } from '@material-ui/core'
+import { KeyboardArrowRight, KeyboardArrowLeft } from '@material-ui/icons'
+import { styled } from '@material-ui/styles'
 
 type Props = {
   /** A list of images */
@@ -15,128 +11,144 @@ type Props = {
   className?: string
 }
 
-const useStyles = makeStyles(theme =>
-  createStyles({
-    arrow: {
-      display: 'inline',
-      position: 'absolute',
-      top: 0,
-      bottom: 0,
-      width: '24px',
-      height: '24px',
-      margin: 'auto',
-      zIndex: 10,
-      borderRadius: '8px',
-      backgroundColor: theme.palette.primary.contrastText,
-      cursor: 'pointer'
-    },
-    arrowRight: {
-      right: '20px'
-    },
-    arrowLeft: {
-      left: '20px'
-    },
-    wrapper: {
-      display: 'flex',
-      position: 'relative',
-      minWidth: '200px',
-      minHeight: '200px'
-    },
-    root: {
-      display: 'flex',
-      padding: theme.spacing(2),
-      minWidth: '200px',
-      position: 'relative',
-      justifyContent: 'center'
-    },
-    cover: {
-      minWidth: '200px',
-      minHeight: '200px',
-      position: 'absolute',
-      left: 0,
-      top: 0
-    },
-    indicatorContainer: {
-      display: 'inline-flex',
-      position: 'absolute',
-      bottom: '10px',
-      left: 0,
-      right: 0,
-      justifyContent: 'center'
-    },
-    indicator: {
-      width: '12px',
-      height: '12px',
-      borderRadius: '8px',
-      backgroundColor: theme.palette.primary.contrastText,
-      borderColor: theme.palette.primary.light,
-      borderWidth: '2px',
-      borderStyle: 'solid',
-      marginLeft: '2px',
-      marginRight: '2px',
-      boxSizing: 'border-box'
-    },
-    indicatorActive: {
-      backgroundColor: theme.palette.primary.light
-    }
-  })
+const Root = styled('div')({
+  display: 'inline-block',
+  maxWidth: '480px',
+  maxHeight: '480px'
+})
+
+const Wrapper = styled('div')(({ theme }) => ({
+  position: 'relative',
+  boxSizing: 'border-box',
+  padding: theme.spacing(2),
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center'
+}))
+
+const Container = styled('div')(({ theme }) => ({
+  width: '280px',
+  height: '280px',
+  boxShadow: '-5px 0 24px rgba(0, 0, 0, 0.08)',
+  overflow: 'hidden',
+  margin: 'auto'
+}))
+
+const Images = styled('div')(({ theme, current = 0, length }) => ({
+  right: `${current * 280}px`,
+  position: 'relative',
+  width: `${length * 280}px`,
+  height: '280px',
+  transition: 'right ease 0.33s'
+}))
+
+const CardMediaStyled = styled(CardMedia)(({ theme }) => ({
+  width: '100%',
+  height: '100%',
+  backgroundSize: 'contain'
+}))
+
+const Arrows = styled('div')({
+  position: 'absolute',
+  top: 0,
+  bottom: 0,
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '100%',
+  maxHeight: '24px',
+  margin: 'auto'
+})
+
+const ImageWrapper = styled('div')(({ theme }) => ({
+  width: '280px',
+  height: '280px',
+  boxSizing: 'border-box',
+  padding: theme.spacing(2),
+  display: 'inline-block'
+}))
+
+const IconButtonStyled = styled(IconButton)(({ theme }) => ({
+  padding: 0,
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.primary.contrastText,
+  '&:hover': {
+    backgroundColor: theme.palette.primary.light
+  }
+}))
+
+const ArrowLeft = props => (
+  <IconButtonStyled {...props}>
+    <KeyboardArrowLeft />
+  </IconButtonStyled>
 )
 
-const handlerPrevious = (val, set) => () => {
-  if (val - 1 >= 0) set(val - 1)
-}
+const ArrowRight = props => (
+  <IconButtonStyled {...props}>
+    <KeyboardArrowRight />
+  </IconButtonStyled>
+)
 
-const handlerNext = (val, set, max) => () => {
-  if (val + 1 < max) set(val + 1)
-}
+const Control = styled('div')({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'
+})
+
+const Dot = styled('div')(({ status, theme }) => ({
+  ...(status === 'active'
+    ? {
+      width: '16px',
+      height: '16px',
+      backgroundColor: theme.palette.primary.main
+    }
+    : {
+      width: '12px',
+      height: '12px',
+      backgroundColor: theme.palette.primary.light
+    }),
+  borderRadius: '50%',
+  margin: '0 4px',
+  cursor: 'pointer'
+}))
 
 const Carousel = (props: Props) => {
   const { images, className } = props
   const [current, setCurrent] = React.useState(0)
-  const classes = useStyles()
+  const handleLeft = () => setCurrent(Math.max(0, current - 1))
+  const handleRight = () => setCurrent(Math.min(images.length - 1, current + 1))
 
   return (
-    <Paper className={[className, classes.root].join(' ')}>
-      <div
-        className={[classes.arrow, classes.arrowLeft].join(' ')}
-        onClick={handlerPrevious(current, setCurrent)}
-        data-testid='arrow-left'
-      >
-        <KeyboardArrowLeft />
-      </div>
-      <Card className={classes.wrapper}>
-        {images.map((im, i) => (
-          <Slide
-            direction='left'
-            mountOnEnter
-            unmountOnExit
-            appear
-            in={i === current}
-            key={i}
-          >
-            <CardMedia image={im} className={classes.cover} title='image' />
-          </Slide>
-        ))}
-      </Card>
-      <div
-        className={[classes.arrow, classes.arrowRight].join(' ')}
-        onClick={handlerNext(current, setCurrent, images.length)}
-        data-testid='arrow-right'
-      >
-        <KeyboardArrowRight />
-      </div>
-      <div className={classes.indicatorContainer}>
-        {images.map((im, i) => (
-          <div
-            className={[
-              classes.indicator,
-              i === current ? classes.indicatorActive : ''
-            ].join(' ')}
-            key={`indicator-${i}`}
-          />
-        ))}
-      </div>
-    </Paper>
+    <Root className={className}>
+      <Wrapper>
+        {images.length > 1 && (
+          <Arrows>
+            <ArrowLeft onClick={handleLeft} aria-label='imagem anterior' />
+            <ArrowRight onClick={handleRight} aria-label='próxima imagem' />
+          </Arrows>
+        )}
+        <Container>
+          <Images current={current} length={images.length}>
+            {images.map((im, key) => (
+              <ImageWrapper aria-label='imagem do produto' key={key}>
+                <CardMediaStyled image={im} />
+              </ImageWrapper>
+            ))}
+          </Images>
+        </Container>
+        {images.length > 1 && (
+          <Control>
+            {images.map((_, key) => (
+              <Dot
+                key={key}
+                status={key === current ? 'active' : 'none'}
+                onClick={() => setCurrent(key)}
+              />
+            ))}
+          </Control>
+        )}
+      </Wrapper>
+    </Root>
   )
 }
 

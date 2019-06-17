@@ -15,9 +15,9 @@ type Props = {
   /** The size of cart icon */
   size: Size,
   /** Quantity of items in the cart */
-  quantity?: string,
-  /** A label about price */
-  label?: string,
+  quantity?: number,
+  /** The price of items in the cart */
+  price?: number,
   /* A className */
   className?: string
 }
@@ -45,24 +45,34 @@ const useStyles = makeStyles(theme =>
   })
 )
 
-const CartBadge = (props: Props) => {
-  const { className, color, onClick, quantity = '', size, label } = props
-  const classes = useStyles()
-  const quantitySan = quantity.length === 0 ? null : quantity
+const formatMoney = (n: number) => n.toFixed(2).replace('.', ',')
 
+const CartBadge = (props: Props) => {
+  const { className, color, onClick, quantity, size, price } = props
+  const classes = useStyles()
+  const label = price ? `R$ ${formatMoney(price)}` : null
   return (
-    <div className={[className, classes.root].join(' ')}>
+    <div className={[className, classes.root].join(' ')} aria-label='carrinho'>
       <IconButton color={color} onClick={onClick} variant='contained'>
         <Badge
           classes={{ badge: classes.badge }}
-          badgeContent={quantitySan}
+          badgeContent={quantity}
           color='secondary'
+          max={99}
+          title={`${quantity || 0} items`}
+          aria-label='quantidade de items'
         >
           <ShoppingCartOutline fontSize={size} color='inherit' />
         </Badge>
       </IconButton>
+
       {label && (
-        <span color='inherit' className={classes.span}>
+        <span
+          color='inherit'
+          className={classes.span}
+          title={label}
+          aria-label='preço total'
+        >
           {label}
         </span>
       )}
@@ -72,8 +82,7 @@ const CartBadge = (props: Props) => {
 
 CartBadge.defaultProps = {
   size: 'default',
-  color: 'inherit',
-  quantity: ''
+  color: 'inherit'
 }
 
 export default CartBadge
