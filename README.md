@@ -30,17 +30,27 @@ This project use:
 
 ## Scripts
 
+It required the environment variable `API_URL`, set it before running the project!
+
 #### `yarn install`
 
 > Install the dependencies
+
+#### `yarn relay`
+
+> Run the relay-compiler
 
 #### `yarn start`
 
 > Run in development mode (localhost:8081)
 
-#### `yarn start`
+> Eg.: `API_URL=http://localhost:3000 yarn start`
+
+#### `yarn build`
 
 > Build the application
+
+> Eg.: `API_URL=http://localhost:3000 yarn build`
 
 #### `yarn flow`
 
@@ -89,10 +99,21 @@ docker-compose up
 
 ## Running the project
 
+Required: run the [Zoas Store API](https://github.com/jeovazero/zoas-store-api-graphql)
+
+1. `yarn install`
+2. `yarn relay`
+3. `API_URL=http://localhost:3000 yarn start`
+
+> Check the correct `API_URL` (Zoas Store API URL)
+
+#### with docker
+
 1. Before to run the project, you need run this [Zoas Store API](https://github.com/jeovazero/zoas-store-api-graphql)
-2. Run `docker-compose build`
-3. Run `docker-compose up`
-4. Done! Test the application
+2. Check the correct `API_URL` (Zoas Store API URL) in **docker-compose.yml**
+3. Run `docker-compose build`
+4. Run `docker-compose up`
+5. Done! Test the application
 
 ## License
 
